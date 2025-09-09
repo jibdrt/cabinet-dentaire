@@ -1,0 +1,48 @@
+// abstracts/_breakpoints.scss
+@use "sass:map";
+
+$breakpoints: (
+  bigscreen: 1850px,
+  xxlarge: 1650px,
+  xlarge: 1450px,
+  mlarge: 1250px,
+  large: 1000px,
+  medium: 768px,
+  smallheight: 850px, // height keys (if you want, split to a separate map)
+  bigheight: 950px
+);
+
+// Helper to read from the map
+@function bp($key) {
+  @return map.get($breakpoints, $key);
+}
+
+@mixin breakpoint-up($breakpoint) {
+  @media screen and (min-width: #{bp($breakpoint)}) {
+    @content;
+  }
+}
+
+@mixin breakpoint-down($breakpoint) {
+  @media screen and (max-width: calc(#{bp($breakpoint)} - .02px)) {
+    @content;
+  }
+}
+
+@mixin breakpoint-between($min, $max) {
+  @media screen and (min-width: #{bp($min)}) and (max-width: calc(#{bp($max)} - .02px)) {
+    @content;
+  }
+}
+
+@mixin height-down($breakpoint) {
+  @media screen and (max-height: calc(#{bp($breakpoint)} - .02px)) {
+    @content;
+  }
+}
+
+@mixin height-up($breakpoint) {
+  @media screen and (min-height: #{bp($breakpoint)}) { // fixed: min-height
+    @content;
+  }
+}

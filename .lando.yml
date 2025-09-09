@@ -1,0 +1,5 @@
+name: cabinet
+recipe: wordpress
+config:
+  webroot: .
+

@@ -1,0 +1,46 @@
+$fonts-path: "./assets/fonts";
+
+// ---- Reusable @font-face mixin
+@mixin font-face($family, $dir, $file, $weight: 400, $style: normal) {
+  @font-face {
+    font-family: $family;
+    src:
+      url("#{$fonts-path}/#{$dir}/#{$file}.woff2") format("woff2"),
+      url("#{$fonts-path}/#{$dir}/#{$file}.woff") format("woff");
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+  }
+}
+
+/* =========================
+   Cormorant Garamond
+   ========================= */
+
+// Light (300)
+@include font-face("Cormorant Garamond", "cormorant-garamond", "CormorantGaramond-Light", 300, normal);
+@include font-face("Cormorant Garamond", "cormorant-garamond", "CormorantGaramond-LightItalic", 300, italic);
+
+// Regular (400)
+@include font-face("Cormorant Garamond", "cormorant-garamond", "CormorantGaramond-Regular", 400, normal);
+@include font-face("Cormorant Garamond", "cormorant-garamond", "CormorantGaramond-Italic", 400, italic);
+
+// Medium (500)
+@include font-face("Cormorant Garamond", "cormorant-garamond", "CormorantGaramond-Medium", 500, normal);
+@include font-face("Cormorant Garamond", "cormorant-garamond", "CormorantGaramond-MediumItalic", 500, italic);
+
+// SemiBold (600)
+@include font-face("Cormorant Garamond", "cormorant-garamond", "CormorantGaramond-SemiBold", 600, normal);
+@include font-face("Cormorant Garamond", "cormorant-garamond", "CormorantGaramond-SemiBoldItalic", 600, italic);
+
+// BoldItalic only (since that’s what’s present in your folder)
+@include font-face("Cormorant Garamond", "cormorant-garamond", "CormorantGaramond-BoldItalic", 700, italic);
+
+
+/* =========================
+   Sebino
+   ========================= */
+
+@include font-face("Sebino", "sebino", "Sebino-Regular", 400, normal);
+@include font-face("Sebino", "sebino", "Sebino-Light", 300, normal);
+@include font-face("Sebino", "sebino", "Sebino-Thin", 250, normal);

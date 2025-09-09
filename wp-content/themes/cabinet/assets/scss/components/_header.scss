@@ -1,0 +1,278 @@
+@use '../abstracts/colors';
+@use '../abstracts/breakpoints' as *;
+
+// Tokens
+$header-height: 92px;
+$header-height-mobile: 80px;
+$container-margin: 0 8% 0 4%;
+$bp-md: 1024px;
+
+// Header
+.cdcc__header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: colors.$white;
+  border-bottom: 1px solid rgba(0, 0, 0, .06);
+  transition: transform 0.3s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+
+
+  &___inner {
+    margin: 0 auto;
+    margin: $container-margin;
+    height: $header-height;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    gap: 20px;
+
+    @include breakpoint-down(large) {
+      height: $header-height-mobile;
+      margin: 0 4% 0 2%;
+      padding: 0 0 0 16px;
+    }
+  }
+
+  &___logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+
+    &Text {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: colors.$greendark;
+      letter-spacing: .2px;
+    }
+
+    img {
+      display: block;
+      height: auto;
+      width: 220px;
+
+      @include breakpoint-down(large) {
+        width: 180px;
+      }
+    }
+  }
+
+  // Desktop nav
+  &___nav {
+    display: none;
+
+    @media (min-width: $bp-md) {
+      display: block;
+    }
+  }
+
+  // WP menu (desktop)
+  &___menu {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    // Reset WP's default menu classes
+    li {
+      margin: 0;
+      list-style: none;
+    }
+
+    .menu-item-has-children {
+      position: relative;
+    }
+
+    a {
+      position: relative;
+      text-decoration: none;
+      font-family: 'Sebino', sans-serif;
+      color: colors.$greendark;
+      font-weight: 300;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0;
+        height: 1px;
+        background: colors.$greendark;
+        opacity: 0.5;
+        transition: width .3s cubic-bezier(.4, 0, .2, 1), left .3s cubic-bezier(.4, 0, .2, 1);
+      }
+
+      &:hover::after {
+        width: 100%;
+        left: 0;
+      }
+
+      &:not(:hover)::after {
+        width: 0;
+        left: 100%;
+      }
+    }
+
+    .current-menu-item>a::after,
+    .current_page_item>a::after {
+      width: 100%;
+      left: 0;
+    }
+  }
+
+  // CTA utility (optional)
+  .is-cta {
+    padding: 10px 14px;
+    border-radius: 999px;
+    color: #fff;
+
+    &:hover {
+      filter: brightness(.96);
+    }
+  }
+
+  // Burger button (mobile)
+  &___burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    width: 44px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    @media (min-width: $bp-md) {
+      display: none;
+    }
+
+    .iconify {
+      font-size: 24px;
+      line-height: 1;
+      color: colors.$greendark;
+    }
+  }
+
+  // Mobile drawer overlay + panel
+  &___mobile {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .28);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+
+    // Panel
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(84vw, 380px);
+      background: colors.$white;
+      box-shadow: -12px 0 24px rgba(0, 0, 0, .12);
+      transform: translateX(100%);
+      transition: transform .2s ease;
+    }
+
+    >* {
+      position: relative;
+    }
+
+    &Header {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(84vw, 380px);
+      height: $header-height;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 0, 0, .06);
+      background: colors.$white;
+
+      @include breakpoint-down(large) {
+        border-bottom: none;
+      }
+
+    }
+
+    &Title {
+      font-weight: 600;
+      color: colors.$greendark;
+    }
+
+    // WP menu (mobile)
+    &Menu {
+      position: absolute;
+      top: $header-height;
+      right: 0;
+      bottom: 0;
+      width: min(84vw, 380px);
+      padding: 16px;
+      list-style: none;
+      margin: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      li {
+        margin: 0;
+        list-style: none;
+      }
+
+      a {
+        display: block;
+        padding: 14px 12px;
+        border-radius: 12px;
+        text-decoration: none;
+        color: colors.$greendark;
+        font-family: Sebino;
+        font-weight: 250;
+
+        &:hover {
+          background: #efeff1;
+        }
+      }
+    }
+  }
+
+  &___close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    right: 1rem;
+    top: 54%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    .iconify {
+      font-size: 22px;
+      color: colors.$greendark;
+    }
+  }
+
+  // Open state
+  &.is-menu-open {
+    .cdcc__header___mobile {
+      opacity: 1;
+      pointer-events: auto;
+
+      &::before {
+        transform: translateX(0%);
+      }
+    }
+  }
+
+  .cdcc__header___mobileHeader {
+    background: transparent;
+  }
+}
