@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!frame || !video) return;
 
   // initial state (all via GSAP as requested)
-  gsap.set(frame, { borderRadius: 20 });
+  gsap.set(frame, { borderRadius: 0 });
   gsap.set(video, { scale: 0.7, autoAlpha: 1, force3D: true });
 
   const tl = gsap.timeline({

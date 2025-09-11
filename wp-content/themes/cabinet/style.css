@@ -253,6 +253,7 @@ p, h1, h2, h3, h4, h5, h6 {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
+  overflow: hidden;
 }
 .cdcc__header___mobile::before {
   content: "";
@@ -346,6 +347,89 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 .cdcc__header .cdcc__header___mobileHeader {
   background: transparent;
+}
+
+.cdcc__footer {
+  border: 1px solid red;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  background: #3D4C51;
+}
+.cdcc__footer .inner {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  padding: 4rem 0;
+}
+.cdcc__footer .inner .left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.cdcc__footer .inner .left .logo img {
+  display: block;
+  height: auto;
+  width: 420px;
+}
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__footer .inner .left .logo img {
+    width: 180px;
+  }
+}
+.cdcc__footer .inner .left .infos {
+  margin: 1rem 0 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.cdcc__footer .inner .left .infos .location,
+.cdcc__footer .inner .left .infos .phone {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.cdcc__footer .inner .left .infos .location:hover .icon,
+.cdcc__footer .inner .left .infos .phone:hover .icon {
+  color: #CBAE70;
+}
+.cdcc__footer .inner .left .infos .location:hover a,
+.cdcc__footer .inner .left .infos .phone:hover a {
+  color: #CBAE70;
+}
+.cdcc__footer .inner .left .infos .location .icon,
+.cdcc__footer .inner .left .infos .phone .icon {
+  color: #FFFFFF;
+  font-size: 1.2rem;
+}
+.cdcc__footer .inner .left .infos .location a,
+.cdcc__footer .inner .left .infos .phone a {
+  font-family: "sebino", sans-serif;
+  font-weight: 300;
+  text-decoration: none;
+  color: #FFFFFF;
+}
+.cdcc__footer .inner .right {
+  width: 50%;
+}
+.cdcc__footer .inner .right .footer__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  list-style: none;
+  text-align: right;
+}
+.cdcc__footer .inner .right .footer__menu a {
+  font-family: "sebino", sans-serif;
+  font-weight: 300;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #FFFFFF;
+}
+.cdcc__footer .inner .right .footer__menu a:hover {
+  color: #CBAE70;
 }
 
 .cky-consent-container,
@@ -591,7 +675,11 @@ p, h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   align-items: center;
 }
-.cdcc__home__video .cdcc__home__video__inner .cdcc__home__video__media {
+.cdcc__home__video .cdcc__home__video__inner .cdcc__home__video__frame {
+  position: relative;
+  z-index: 2;
+}
+.cdcc__home__video .cdcc__home__video__inner .cdcc__home__video__frame .cdcc__home__video__media {
   width: 100%;
   max-width: 1920px;
   height: auto;
@@ -668,10 +756,16 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .cdcc__home__soins {
+  /* NEW */
+  position: relative;
+  overflow: hidden;
+  /* OLD */
   width: 100%;
   padding: 6rem 0;
-  color: #3D4C51;
-  background: #FFFFFF;
+  color: #FFFFFF;
+  background: #3D4C51;
+  /* NEW: keep content above SVG */
+  /* NEW: SVG background container */
 }
 @media screen and (max-width: calc(1000px - 0.02px)) {
   .cdcc__home__soins {
@@ -683,8 +777,26 @@ p, h1, h2, h3, h4, h5, h6 {
     padding: 0 0 3rem 0;
   }
 }
+.cdcc__home__soins > * {
+  position: relative;
+  z-index: 2;
+}
+.cdcc__home__soins .soins-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+.cdcc__home__soins .soins-lines .lines path {
+  /* initial stroke (works on both light/dark bg) */
+  stroke: #3D4C51;
+  opacity: 0.9;
+  will-change: stroke, stroke-dashoffset, opacity, transform;
+}
 .cdcc__home__soins .cdcc__home__soins__title {
-  margin: 0 auto 3rem auto;
+  margin: 0 auto 7rem auto;
   width: 80%;
   max-width: 1500px;
   text-align: left;
@@ -705,16 +817,17 @@ p, h1, h2, h3, h4, h5, h6 {
   color: #CBAE70;
 }
 .cdcc__home__soins .cdcc__home__soins__title .subtitle {
-  font-family: "Sebino", sans-serif;
-  font-size: clamp(18px, 2.2vw, 28px);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(18px, 2.2vw, 42px);
   font-weight: 300;
-  color: #3D4C51;
+  font-style: italic;
+  color: #FFFFFF;
   opacity: 0.9;
   margin: 0 auto 0 0;
   max-width: 900px;
 }
 .cdcc__home__soins .cdcc__home__soins__content {
-  width: 80%;
+  width: 70%;
   max-width: 1500px;
   margin: 0 auto;
 }
@@ -723,12 +836,18 @@ p, h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   gap: 4rem;
 }
+@media screen and (max-width: calc(1250px - 0.02px)) {
+  .cdcc__home__soins .cdcc__home__soins__content .list {
+    gap: 6rem;
+  }
+}
 .cdcc__home__soins .cdcc__home__soins__content .list .item {
   display: flex;
   align-items: center;
   gap: 4vw;
   margin-bottom: 0;
   background: transparent;
+  will-change: transform, opacity;
 }
 @media screen and (max-width: calc(1000px - 0.02px)) {
   .cdcc__home__soins .cdcc__home__soins__content .list .item {
@@ -765,6 +884,8 @@ p, h1, h2, h3, h4, h5, h6 {
   display: block;
   border-radius: 18px;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: auto;
+  will-change: transform, opacity;
 }
 .cdcc__home__soins .cdcc__home__soins__content .list .item .col__content {
   width: 60%;
@@ -780,7 +901,7 @@ p, h1, h2, h3, h4, h5, h6 {
   font-family: "Cormorant Garamond", serif;
   font-size: clamp(28px, 3vw, 40px);
   font-weight: 500;
-  color: #3D4C51;
+  color: #FFFFFF;
   margin: 0 0 1rem 0;
   line-height: 1.1;
 }
@@ -788,7 +909,7 @@ p, h1, h2, h3, h4, h5, h6 {
   font-family: "Sebino", sans-serif;
   font-size: clamp(16px, 2vw, 20px);
   font-weight: 300;
-  color: #3D4C51;
+  color: #FFFFFF;
   opacity: 0.9;
   margin-bottom: 1.5rem;
   line-height: 1.5;
@@ -799,11 +920,10 @@ p, h1, h2, h3, h4, h5, h6 {
   gap: 9px;
   padding: 14px 18px 14px 16px;
   border-radius: 999px;
-  background: #3D4C51;
+  background: #FFFFFF;
   text-decoration: none;
-  border: 1px solid rgba(61, 76, 81, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 0 rgba(61, 76, 81, 0.1) inset;
 }
 .cdcc__home__soins .cdcc__home__soins__content .list .item .col__content .btn--soin:hover {
   transform: translateY(-3px);
@@ -823,158 +943,400 @@ p, h1, h2, h3, h4, h5, h6 {
   font-size: clamp(12px, 2vw, 18px);
   line-height: 1;
   letter-spacing: 0.5px;
-  color: #FFFFFF;
+  color: #3D4C51;
 }
 .cdcc__home__soins .cdcc__home__soins__content .list .item .col__content .btn--soin .btn__icon {
   margin-left: 6px;
   font-size: 1.1rem;
   line-height: 1;
   opacity: 0.95;
-  color: #FFFFFF;
+  color: #3D4C51;
 }
 
-.cdcc__home__urgences {
-  height: 50rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #3D4C51;
+.cdcc__home__team {
+  width: 100%;
+  padding: 6rem 0;
+  color: #3D4C51;
+  background: #FFFFFF;
 }
-.cdcc__home__urgences .inner {
-  display: flex;
-  width: 75%;
-  gap: 5%;
-  margin: auto;
-}
-.cdcc__home__urgences .inner .col {
-  width: 50%;
-}
-.cdcc__home__urgences .inner .col .content .title {
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(40px, 6vw, 102px);
-  font-weight: 600;
-  color: #FFFFFF;
-  line-height: 0.95;
-  margin-bottom: 2rem;
-}
-.cdcc__home__urgences .inner .col .content .title span {
-  color: #CBAE70;
-}
-.cdcc__home__urgences .inner .col .content .subtitle {
-  margin: 0 0 clamp(18px, 2.6vw, 28px);
-  font-family: "Cormorant Garamond", serif;
-  font-weight: 400;
-  font-size: clamp(22px, 2.2vw, 28px);
-  color: #FFFFFF;
-  opacity: 0.9;
-  font-style: italic;
-  max-width: 70%;
-  text-transform: uppercase;
-}
-@media screen and (max-width: calc(768px - 0.02px)) {
-  .cdcc__home__urgences .inner .col .content .subtitle {
-    max-width: 90%;
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__home__team {
+    padding: 4rem 0;
   }
 }
-.cdcc__home__urgences .inner .col .content .separator {
-  width: clamp(120px, 10vw, 240px);
-  height: 1px;
-  margin: clamp(10px, 1.4vw, 18px) 0 clamp(16px, 2vw, 24px);
-  border: 0;
-  background: #FFFFFF;
-  opacity: 0.85;
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__home__team {
+    padding: 0 0 3rem 0;
+  }
 }
-.cdcc__home__urgences .inner .col .content .text {
+.cdcc__home__team .cdcc__home__team__title {
+  margin: 0 auto 4rem auto;
+  width: 70%;
+  max-width: 1500px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__home__team .cdcc__home__team__title {
+    text-align: left;
+  }
+}
+.cdcc__home__team .cdcc__home__team__title .title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 1rem;
+}
+.cdcc__home__team .cdcc__home__team__title .title span {
+  color: #CBAE70;
+}
+.cdcc__home__team .cdcc__home__team__title .subtitle {
   font-family: "Sebino", sans-serif;
-  font-size: clamp(16px, 2.5vw, 18px);
+  font-size: clamp(18px, 2.2vw, 28px);
   font-weight: 300;
-  max-width: 600px;
-  color: #FFFFFF;
-  max-width: 80%;
+  color: #3D4C51;
+  opacity: 0.9;
+  margin: 0 auto;
+  max-width: 900;
 }
-.cdcc__home__urgences .inner .col .content .text p {
-  margin: 0 0 1.5rem 0;
-  line-height: 1.2;
-}
-.cdcc__home__urgences .inner .col .content .btn {
-  position: relative;
+.cdcc__home__team .cdcc__home__team__title .btn--team {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  padding: 16px 18px 16px 16px;
-  margin-top: 2rem;
+  padding: 14px 18px 14px 16px;
   border-radius: 999px;
-  background: #FFFFFF;
-  color: #FFFFFF;
+  background: #3D4C51;
   text-decoration: none;
+  border: 1px solid rgba(61, 76, 81, 0.18);
+  transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 0 rgba(61, 76, 81, 0.1) inset;
+  width: fit-content;
+  margin: 0 0 0 auto;
 }
-@media screen and (max-width: calc(1000px - 0.02px)) {
-  .cdcc__home__urgences .inner .col .content .btn {
-    bottom: 0.5rem;
-    right: 0.5rem;
-    padding: 10px;
-  }
-}
-.cdcc__home__urgences .inner .col .content .btn:hover {
-  transform: translateY(-1px);
+.cdcc__home__team .cdcc__home__team__title .btn--team:hover {
+  transform: translateY(-3px);
   filter: brightness(1.06);
   box-shadow: 0 6px 16px rgba(61, 76, 81, 0.18);
 }
-.cdcc__home__urgences .inner .col .content .btn .btn__dot {
+.cdcc__home__team .cdcc__home__team__title .btn--team .btn__dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: #CBAE70;
   flex-shrink: 0;
 }
-@media screen and (max-width: calc(1000px - 0.02px)) {
-  .cdcc__home__urgences .inner .col .content .btn .btn__dot {
-    display: none;
-  }
-}
-.cdcc__home__urgences .inner .col .content .btn .btn__text {
+.cdcc__home__team .cdcc__home__team__title .btn--team .btn__text {
   font-family: "Sebino", sans-serif;
-  font-size: 1rem;
   font-weight: 400;
+  font-size: clamp(12px, 2vw, 18px);
   line-height: 1;
-  position: relative;
-  top: 2px;
-  letter-spacing: 0.02em;
-  color: #3D4C51;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
 }
-@media screen and (max-width: calc(1000px - 0.02px)) {
-  .cdcc__home__urgences .inner .col .content .btn .btn__text {
-    display: none;
-  }
-}
-.cdcc__home__urgences .inner .col .content .btn .btn__icon {
-  font-size: 1.5rem;
+.cdcc__home__team .cdcc__home__team__title .btn--team .btn__icon {
+  margin-left: 6px;
+  font-size: 1.1rem;
   line-height: 1;
   opacity: 0.95;
-  color: #3D4C51;
+  color: #FFFFFF;
 }
-.cdcc__home__urgences .inner .col .image img {
+.cdcc__home__team .cdcc__home__team__content {
+  width: 70%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.cdcc__home__team .cdcc__home__team__content .image {
+  overflow: hidden;
+  border-radius: 20px;
+}
+.cdcc__home__team .cdcc__home__team__content .image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* smooth theme transitions */
-body {
-  transition: background-color 0.6s ease, color 0.6s ease;
+.cdcc__home__urgences {
+  background: #3D4C51;
+  padding: 8rem 0 6rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cdcc__home__urgences .inner {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 5vw;
+}
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__home__urgences .inner {
+    flex-direction: column;
+    width: 96%;
+    gap: 3rem;
+  }
+}
+.cdcc__home__urgences .inner .col__image {
+  flex: 1 1 44%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+  max-width: 520px;
+}
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__home__urgences .inner .col__image {
+    max-width: 100%;
+    min-width: 0;
+    margin-bottom: 2rem;
+  }
+}
+.cdcc__home__urgences .inner .col__image .image {
+  width: 100%;
+  aspect-ratio: 4/5;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(61, 76, 81, 0.14);
+}
+.cdcc__home__urgences .inner .col__image .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+}
+.cdcc__home__urgences .inner .col__content {
+  flex: 1 1 56%;
+  display: flex;
+  align-items: center;
+}
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__home__urgences .inner .col__content {
+    flex: 1 1 100%;
+  }
+}
+.cdcc__home__urgences .inner .col__content .content {
+  width: 100%;
+}
+.cdcc__home__urgences .inner .col__content .content .title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(38px, 5vw, 86px);
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+}
+.cdcc__home__urgences .inner .col__content .content .title span {
+  color: #CBAE70;
+}
+.cdcc__home__urgences .inner .col__content .content .subtitle {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(22px, 2.2vw, 32px);
+  font-weight: 400;
+  color: #FFFFFF;
+  opacity: 0.92;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.cdcc__home__urgences .inner .col__content .content .separator {
+  width: clamp(120px, 10vw, 240px);
+  height: 2px;
+  margin: 0 0 2rem 0;
+  border: 0;
+  background: #CBAE70;
+  opacity: 0.85;
+}
+.cdcc__home__urgences .inner .col__content .content .text {
+  font-family: "Sebino", sans-serif;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 300;
+  color: #FFFFFF;
+  opacity: 0.92;
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+  max-width: 90%;
+}
+.cdcc__home__urgences .inner .col__content .content .text p {
+  margin: 0 0 1.2rem 0;
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 22px 16px 18px;
+  border-radius: 999px;
+  background: #CBAE70;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: transform 0.18s, filter 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 0 rgba(203, 174, 112, 0.1) inset;
+  margin-top: 0.5rem;
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences:hover {
+  transform: translateY(-3px) scale(1.03);
+  filter: brightness(1.08);
+  box-shadow: 0 8px 24px rgba(203, 174, 112, 0.18);
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences .btn__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences .btn__text {
+  font-family: "Sebino", sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 2vw, 20px);
+  line-height: 1;
+  letter-spacing: 0.5px;
+  color: #3D4C51;
+  margin-top: 2.5px;
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences .btn__icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  opacity: 0.95;
+  color: #3D4C51;
 }
 
-/* make separators adopt theme quickly (JS overrides color too) */
-.inner__content__separator,
-.soins__title__separator,
-.team__title__separator {
-  transition: background-color 0.6s ease, opacity 0.4s ease;
+.cdcc__home__acces {
+  width: 100%;
+}
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__home__acces {
+    padding: 4rem 0;
+  }
+}
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__home__acces {
+    padding: 0 0 3rem 0;
+  }
+}
+.cdcc__home__acces .cdcc__home__acces__title {
+  width: 100%;
+  text-align: left;
+  background: #3D4C51;
+  color: #FFFFFF;
+}
+.cdcc__home__acces .cdcc__home__acces__title h5 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(40px, 6vw, 86px);
+  font-weight: 500;
+  margin: 0;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+  width: 70%;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+.cdcc__home__acces .cdcc__home__acces__content {
+  width: 100%;
+  margin: 0 auto;
+}
+.cdcc__home__acces .cdcc__home__acces__content #map {
+  width: 100%;
+  height: 620px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(61, 76, 81, 0.08);
+  background: #eaeaea;
+}
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__home__acces .cdcc__home__acces__content #map {
+    height: 460px;
+  }
 }
 
-/* soins item borders blend nicely when flipping theme */
-.cdcc__home__soins .soin {
-  transition: border-color 0.6s ease, color 0.6s ease, background-color 0.6s ease;
+.cdcc__home__hours {
+  width: 100%;
+  padding: 6rem 0;
+  color: #3D4C51;
+  background: #FFFFFF;
+}
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__home__hours {
+    padding: 4rem 0;
+  }
+}
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__home__hours {
+    padding: 0 0 3rem 0;
+  }
+}
+.cdcc__home__hours .cdcc__home__hours__title {
+  width: 100%;
+}
+.cdcc__home__hours .cdcc__home__hours__title h6 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(40px, 6vw, 86px);
+  font-weight: 500;
+  font-style: italic;
+  text-transform: uppercase;
+  margin: 0;
+  color: #3D4C51;
+  letter-spacing: 0.02em;
+  width: 70%;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+.cdcc__home__hours .cdcc__home__hours__content {
+  width: 70%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.cdcc__home__hours .cdcc__home__hours__content .list {
+  font-family: "Sebino", sans-serif;
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 300;
+  max-width: 600px;
+  color: #3D4C51;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+.cdcc__home__hours .cdcc__home__hours__content .list p {
+  margin: 0 0 1.5rem 0;
+}
+
+.cdcc__home__soins {
+  position: relative;
+  background: #3D4C51;
+  /* starts white */
+  overflow: hidden;
+  padding-top: 14rem;
+  margin-top: -10rem;
+}
+
+.cdcc__home__soins > * {
+  position: relative;
+  z-index: 2;
+  /* keep content above the svg */
+}
+
+.cdcc__home__soins .soins-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* initial stroke color (on white bg) */
+.cdcc__home__soins .soins-lines .lines path {
+  stroke: #3D4C51;
+  opacity: 0.9;
+}
+
+.cdcc__home__soins,
+.cdcc__home__soins .soins-lines .lines path {
+  will-change: background-color, stroke, stroke-dashoffset, opacity, transform;
 }
 
 /*
