@@ -152,7 +152,6 @@ get_header(); ?>
         </div>
     </section>
 
-
     <section class="cdcc__home__team">
         <div class="cdcc__home__team__title">
             <h4 class="title">
@@ -179,8 +178,6 @@ get_header(); ?>
             </div>
         </div>
     </section>
-
-
 
     <section class="cdcc__home__urgences">
         <div class="inner">
