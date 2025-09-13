@@ -89,7 +89,7 @@ get_header(); ?>
         </div>
     </section>
 
-    <section class="cdcc__home__soins">
+    <section class="cdcc__home__soins" id="soins">
         <!-- SVG crossed lines background -->
         <svg class="soins-lines" viewBox="0 0 1440 600" preserveAspectRatio="none" aria-hidden="true">
             <g class="lines" fill="none" stroke-linecap="round" stroke-width="1">
@@ -152,7 +152,7 @@ get_header(); ?>
         </div>
     </section>
 
-    <section class="cdcc__home__team">
+    <section class="cdcc__home__team" id="equipe">
         <div class="cdcc__home__team__title">
             <h4 class="title">
                 <?php echo isset($team['title']) ? esc_html($team['title']) : ''; ?>
@@ -216,7 +216,7 @@ get_header(); ?>
         </div>
     </section>
 
-    <section class="cdcc__home__acces">
+    <section class="cdcc__home__acces" id="acces">
         <div class="cdcc__home__acces__title">
             <h5>
                 Accès
@@ -229,7 +229,7 @@ get_header(); ?>
         </div>
     </section>
 
-    <section class="cdcc__home__hours">
+    <section class="cdcc__home__hours" id="horaires">
         <div class="cdcc__home__hours__title">
             <h6>
                 <?php echo isset($hours['title']) ? esc_html($hours['title']) : ''; ?>

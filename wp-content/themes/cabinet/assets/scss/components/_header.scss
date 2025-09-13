@@ -13,8 +13,29 @@ $bp-md: 1024px;
   top: 0;
   z-index: 1000;
   background: colors.$white;
-  border-bottom: 1px solid rgba(0, 0, 0, .06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   transition: transform 0.3s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+
+  // &.cabinet {
+  //   background: colors.$greendark;
+  //   border-bottom: none;
+  //   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+
+  //   .cdcc__header___logo {
+  //     &Text {
+  //       color: colors.$white;
+  //     }
+  //   }
+
+  //   .cdcc__header___burger .iconify,
+  //   .cdcc__header___menu a {
+  //     color: colors.$white;
+
+  //     &::after {
+  //       background: colors.$white;
+  //     }
+  //   }
+  // }
 
 
   &___inner {

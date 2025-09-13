@@ -61,4 +61,37 @@
 
     }
 
+    // Gestion des ancres #soins, #hours, etc.
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+
+    anchorLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('href'); // ex. "#soins"
+            if (!targetId || targetId === "#") return;
+
+            // Fermer le menu si mobile
+            if (window.innerWidth < 1000 && header.classList.contains('is-menu-open')) {
+                closeMenu();
+            }
+
+            // Vérifier si on est sur la homepage
+            const isHome = window.location.pathname === "/" || window.location.pathname === "/index.php";
+
+            if (isHome) {
+                // Empêcher le comportement par défaut
+                e.preventDefault();
+
+                // Cibler l’ancre
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: "smooth" });
+                }
+            } else {
+                // Rediriger vers la home avec le hash
+                link.setAttribute('href', `/${targetId}`);
+            }
+        });
+    });
+
+
 })();

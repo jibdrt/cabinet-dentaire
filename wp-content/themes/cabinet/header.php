@@ -20,15 +20,24 @@ $logo_url = wp_get_attachment_image_url($logo_id, 'full');
 ?>
 <div id='page'>
 
-<header class="cdcc__header" role="banner">
+<header class="cdcc__header
+<?php if (is_page('le-cabinet')) echo ' cabinet'; ?>" role="banner">
   <div class="cdcc__header___inner">
     <!-- Logo (left) -->
     <a href="<?php echo esc_url(home_url('/')); ?>" class="cdcc__header___logo" aria-label="<?php bloginfo('name'); ?>">
-      <?php if ($logo_url): ?>
-        <img src="<?php echo esc_url($logo_url); ?>" alt="<?php bloginfo('name'); ?>">
-      <?php else: ?>
-        <span class="cdcc__header___logoText"><?php bloginfo('name'); ?></span>
-      <?php endif; ?>
+      <?php
+      if (is_page('le-cabinet-temp')) {
+      // Use custom logo for "le-cabinet" page
+      $custom_logo_path = get_template_directory_uri() . '/assets/images/logo_horizontal_1_blanc.png';
+      ?>
+      <img src="<?php echo esc_url($custom_logo_path); ?>" alt="<?php bloginfo('name'); ?>">
+      <?php
+      } elseif ($logo_url) {
+      ?>
+      <img src="<?php echo esc_url($logo_url); ?>" alt="<?php bloginfo('name'); ?>">
+      <?php } else { ?>
+      <span class="cdcc__header___logoText"><?php bloginfo('name'); ?></span>
+      <?php } ?>
     </a>
 
     <!-- Desktop nav (right) -->

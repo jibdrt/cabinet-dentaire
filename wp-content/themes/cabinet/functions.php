@@ -81,6 +81,24 @@ function custom_excerpt_length($excerpt, $charlength)
     }
 }
 
+// Remove "current" classes from menu items that are hash anchors
+add_filter('nav_menu_css_class', function (array $classes, $item) {
+    $url = $item->url ?? '';
+    // pure hash (#soins) OR home + hash (https://site.tld/#soins)
+    if (preg_match('~^#~', $url) || preg_match('~^https?://[^#]+/#~i', $url)) {
+        $classes = array_diff($classes, [
+            'current-menu-item',
+            'current_page_item',
+            'current_page_parent',
+            'current_page_ancestor',
+            'current-menu-ancestor',
+            'current-menu-parent'
+        ]);
+    }
+    return $classes;
+}, 10, 2);
+
+
 if (function_exists('acf_add_options_page')) {
 
     acf_add_options_page(array(
