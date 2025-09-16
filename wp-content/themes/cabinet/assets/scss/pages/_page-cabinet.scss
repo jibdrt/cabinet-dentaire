@@ -154,6 +154,7 @@
         .gallery {
             // container spacing if needed
             padding-top: clamp(16px, 3vw, 32px);
+            padding-bottom: 10rem;
             width: 80%;
             margin: 0 auto;
         }
@@ -207,7 +208,7 @@
             .grid__figure {
                 display: block;
                 overflow: hidden;
-                border-radius: 8px;
+                // border-radius: 8px;
                 background: rgba(colors.$white, 0.04);
                 box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
 
@@ -224,6 +225,146 @@
                     transform: scale(1.03);
                 }
             }
+        }
+    }
+}
+
+/* ---------- Lightbox (baguetteBox) ---------- */
+#baguetteBox-overlay {
+    z-index: 9999;
+    /* above header */
+    background: rgba(15, 23, 42, 0.5) !important;
+    backdrop-filter: blur(4px);
+
+    /* image container */
+    #baguetteBox-slider {
+        .full-image {
+            padding: clamp(8px, 2vw, 16px);
+        }
+
+        img,
+        figure,
+        .full-image {
+            border-radius: 12px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .25);
+            background: #fff;
+        }
+
+        img {
+            max-height: calc(100vh - 140px);
+        }
+    }
+
+    /* caption (if enabled) */
+    #baguetteBox-caption,
+    .baguetteBox-caption {
+        font-family: 'Sebino', sans-serif;
+        font-size: clamp(14px, 1.8vw, 16px);
+        color: #334155;
+        background: rgba(255, 255, 255, .9);
+        border-radius: 10px;
+        padding: 10px 12px;
+        margin: 10px auto 0;
+        width: clamp(240px, 80vw, 900px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+    }
+
+    .baguetteBox-button svg {
+        position: relative;
+        left: unset;
+        top: unset;
+    }
+
+    /* buttons: prev/next/close */
+    #previous-button,
+    #next-button,
+    #close-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        all: unset;
+        position: fixed;
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .9);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, .15);
+        cursor: pointer;
+        transition: transform .15s ease, background .15s ease, opacity .15s ease;
+        color: colors.$greendark;
+        /* kill default svg bg from baguetteBox */
+        background-image: none !important;
+        text-indent: 0;
+    }
+
+    #previous-button {
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #next-button {
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #close-button {
+        right: 10px;
+        top: 10px;
+        width: 40px;
+        height: 40px;
+    }
+
+    /* hover nudge like modal */
+    #previous-button:hover {
+        transform: translateY(-50%) scale(1.06);
+    }
+
+    #next-button:hover {
+        transform: translateY(-50%) scale(1.06);
+    }
+
+    #close-button:hover {
+        transform: scale(1.06);
+    }
+
+    /* Iconify inside buttons */
+    #previous-button .iconify,
+    #next-button .iconify,
+    #close-button .iconify {
+        font-size: 26px;
+        line-height: 1;
+        opacity: .95;
+    }
+
+    #close-button .iconify {
+        font-size: 22px;
+    }
+
+    /* Focus ring (matches site-wide ring) */
+    #previous-button,
+    #next-button,
+    #close-button {
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+
+        &:focus:not(:focus-visible) {
+            outline: none;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .15);
+        }
+
+        &:focus-visible {
+            outline: 0;
+            box-shadow:
+                0 0 0 2px #fff,
+                0 0 0 4px rgba(colors.$gold, 0.55);
+        }
+
+        &::-moz-focus-inner {
+            border: 0;
         }
     }
 }

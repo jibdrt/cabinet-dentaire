@@ -1,0 +1,364 @@
+@use '../abstracts/colors';
+@use '../abstracts/breakpoints' as *;
+
+.cdcc__equipe {
+
+    .cdcc__hero {
+        background: colors.$greendark;
+        color: colors.$white;
+
+        .cdcc__hero__inner {
+            width: min(92vw, 1440px);
+            margin: 0 auto;
+
+            display: grid;
+            grid-template-columns: 1fr auto 1.3fr; // image | divider | text
+            align-items: center;
+            column-gap: clamp(24px, 4vw, 64px);
+            min-height: clamp(420px, 60vh, 720px);
+
+            @include breakpoint-down(large) {
+                // <= 1000px
+                grid-template-columns: 1fr; // stack
+                row-gap: clamp(20px, 4vw, 36px);
+                min-height: unset;
+                padding: 2rem 0;
+            }
+        }
+
+        .image {
+            align-self: center;
+
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+                aspect-ratio: 4 / 3;
+                object-fit: cover;
+                border-radius: 6px;
+                box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
+
+                @include breakpoint-down(large) {
+                    aspect-ratio: 16 / 10;
+                    border-radius: 8px;
+                }
+            }
+        }
+
+        .divider {
+            width: 1px;
+            height: clamp(80px, 18vh, 160px);
+            background: colors.$gold;
+            opacity: 0.9;
+            border-radius: 1px;
+            transform: translateY(4px);
+
+            @include breakpoint-down(large) {
+                display: none;
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            @include breakpoint-down(large) {
+                width: 90%;
+                border: 1px solid red;
+                margin: auto;
+            }
+
+            h1 {
+                font-family: "Cormorant Garamond", serif;
+                font-weight: 400;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                line-height: 1.05;
+                // margin: 0 0 clamp(8px, 1.5vw, 16px);
+                font-size: clamp(34px, 5vw, 96px);
+                color: colors.$white;
+
+                @include breakpoint-down(smallheight) {
+                    letter-spacing: 0.06em; // slight tighten on short viewports
+                }
+
+
+            }
+
+            .subtitle {
+                font-family: "Cormorant Garamond", serif;
+                font-style: italic;
+                font-weight: 400;
+                letter-spacing: 0.06em;
+                margin: 0;
+                opacity: 0.9;
+                font-size: clamp(18px, 2.2vw, 36px);
+                color: rgba(colors.$white, 0.95);
+            }
+
+            @include breakpoint-down(large) {
+                text-align: left;
+            }
+        }
+    }
+
+    // extra polish on very large screens
+    @include breakpoint-up(xxlarge) {
+        .cdcc__hero .cdcc__hero__inner {
+            width: min(88vw, 1600px);
+            column-gap: clamp(32px, 3.5vw, 72px);
+        }
+    }
+
+    // motion preference
+    @media (prefers-reduced-motion: reduce) {
+        .cdcc__hero .image img {
+            transition: none;
+        }
+    }
+
+    .cdcc__equipe__content {
+        height: auto;
+        width: 100%;
+
+
+        .intro {
+            width: 80%;
+            margin: 4rem auto 0 auto;
+
+            .title {
+                font-family: 'Cormorant Garamond', serif;
+                font-weight: 400;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                line-height: 1.05;
+                margin: 2rem 0 3rem 0;
+                font-size: clamp(28px, 4vw, 48px);
+                color: colors.$greendark;
+            }
+
+            .subtitle {
+                font-family: 'Sebino', sans-serif;
+                font-weight: 300;
+                margin: 0 0 2rem 0;
+                font-size: clamp(18px, 2vw, 28px);
+                line-height: 1.3;
+                letter-spacing: 0.04em;
+                color: colors.$greendark;
+                opacity: 0.85;
+            }
+        }
+
+        .equipe__container {
+            border: 1px solid red;
+
+            .list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 3.5%;
+                height: auto;
+                width: 1200px;
+                list-style: none;
+                margin: auto;
+                padding-bottom: 4rem;
+                // border: 1px solid red;
+
+                @include breakpoint-down(xxlarge) {
+                    width: 1100px;
+                }
+
+                @include breakpoint-down(xlarge) {
+                    gap: 1.5%;
+                    width: 950px;
+                }
+
+                @include breakpoint-down(mlarge) {
+                    width: 900px;
+                }
+
+                @include breakpoint-down(large) {
+                    width: 80%;
+                }
+
+                .team__item {
+                    border: 1px solid rgba(61, 76, 81, 0.3);
+                    border-radius: 28px;
+                    flex: 1 1 clamp(280px, 28%, 360px);
+                    width: 30%;
+                    max-width: 314px;
+                    min-width: 314px;
+                    padding: 2rem 1rem;
+                    margin-top: 3.5%;
+                    height: auto;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    cursor: pointer;
+
+
+                    @include breakpoint-down(xlarge) {
+                        margin-top: 1.5%;
+                        max-width: 300px;
+                        min-width: 300px;
+                    }
+
+                    @include breakpoint-down(mlarge) {
+                        margin-top: 1.5%;
+                        max-width: 270px;
+                        min-width: 270px;
+                    }
+
+
+                    @include breakpoint-down(large) {
+                        margin-bottom: 2rem;
+                    }
+
+
+                    &.team__item--cta {
+                        border: none;
+                        background: none;
+                        padding: 0;
+                        flex: 1 1 clamp(280px, 28%, 360px);
+                        width: 30%;
+                        max-width: 314px;
+                        min-width: 314px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .btn--team {
+                            width: fit-content;
+                            text-align: center;
+                            padding: 16px 18px 16px 16px;
+                            border-radius: 999px;
+                            background: colors.$greendark;
+                            color: colors.$white;
+                            text-decoration: none;
+                            border: 1px solid rgba(colors.$greendark, 0.25);
+                            transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+                            box-shadow: 0 2px 0 rgba(colors.$greendark, 0.25) inset;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 9px;
+
+                            &:hover {
+                                transform: translateY(-1px);
+                                filter: brightness(1.06);
+                                box-shadow: 0 6px 16px rgba(colors.$greendark, 0.18);
+                            }
+
+                            .btn__dot {
+                                width: 12px;
+                                height: 12px;
+                                border-radius: 50%;
+                                background: colors.$gold;
+                                flex-shrink: 0;
+                            }
+
+                            .btn__text {
+                                position: relative;
+                                top: 1px;
+                                font-family: 'Sebino', sans-serif;
+                                font-weight: 400;
+                                font-size: clamp(12px, 2vw, 20px);
+                                line-height: 1;
+                                letter-spacing: 0.5px;
+                                color: colors.$white;
+                            }
+
+                            .btn__icon {
+                                font-size: 1.5rem;
+                                line-height: 1;
+                            }
+                        }
+                    }
+
+                    /* type badge */
+                    .team__item__type {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        text-transform: none;
+                        color: colors.$white;
+                        padding: 0.4rem 2.6rem;
+                        background: colors.$greendark;
+                        font-family: 'Sebino', sans-serif;
+                        font-size: clamp(0.75rem, 1.6vw, 0.9rem);
+                        font-weight: 300;
+                        width: fit-content;
+                        margin: 0 auto 2rem;
+                        border-radius: 28px;
+                        letter-spacing: 0.06em;
+                    }
+
+                    /* image frame */
+                    .team__item__image {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 65%;
+                        min-width: 12rem;
+                        min-height: 16rem;
+                        margin: 0 auto 1.5rem;
+                        border-radius: 15px 15px 100px 100px;
+                        overflow: hidden;
+                        aspect-ratio: 3 / 4;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            display: block;
+                            object-fit: cover;
+                            object-position: top;
+                        }
+                    }
+
+                    /* info */
+                    .team__item__info {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 0.5rem;
+                        text-align: center;
+
+                        .team__item__title {
+                            font-family: 'Cormorant Garamond', serif;
+                            font-weight: 500;
+                            font-size: clamp(1.25rem, 2.8vw, 2rem); // scales between ~20px–32px
+                            color: colors.$greendark;
+                            margin: 0 0 0.5rem 0;
+                            max-width: 80%;
+                            line-height: 1;
+                        }
+
+                        .team__item__qualification {
+                            font-family: 'Sebino', sans-serif;
+                            font-weight: 250;
+                            text-transform: none;
+                            font-size: clamp(0.75rem, 1.4vw, 1rem);
+                            margin: 0;
+                            letter-spacing: 0.06em;
+                            opacity: 0.9;
+                        }
+                    }
+                }
+
+                /* Responsive stacking on small screens */
+                @media (max-width: 768px) {
+                    .team__item {
+                        flex: 1 1 100%;
+                        max-width: 100%;
+                        padding: 1.5rem 1rem;
+
+                        .team__item__image {
+                            width: 75%;
+                            min-width: 10rem;
+                            min-height: 14rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

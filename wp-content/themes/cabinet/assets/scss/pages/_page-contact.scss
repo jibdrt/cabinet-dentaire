@@ -137,11 +137,15 @@
         }
 
         .form__container {
-            border: 1px solid red;
             font-family: 'Sebino', sans-serif;
             width: 65%;
             margin: auto;
             padding: 4rem 0;
+
+            @include breakpoint-down(large) {
+                padding: 0 0 2rem 0;
+                width: 90%;
+            }
 
             input {
                 border: none;
@@ -161,8 +165,12 @@
                 background: rgb(228, 228, 228);
             }
 
+            fieldset {
+                color: colors.$greendark !important;
+            }
+
             .wpforms-error {
-                color: colors.$white;
+                color: colors.$greendark !important;
 
                 &::before {
                     background-color: colors.$white;
@@ -187,15 +195,16 @@
                 z-index: 3;
 
                 &:hover {
-                    background-color: colors.$white !important;
-                    color: colors.$black;
+                    background: colors.$white !important;
+                    outline: 1px solid colors.$greendark !important;
+                    color: colors.$greendark !important;
                 }
             }
 
             .mandatory {
                 width: fit-content;
                 font-size: 14px;
-                color: colors.$white;
+                color: colors.$greendark;
                 font-weight: 250;
                 margin: 2rem 0 8rem 0;
             }

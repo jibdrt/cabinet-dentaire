@@ -39,6 +39,9 @@ get_header(); ?>
             <?php
             echo do_shortcode('[wpforms id="173" title="Formulaire de contact"]');
             ?>
+            <span class="mandatory">
+                * Champs obligatoires
+            </span>
         </div>
     </section>
 

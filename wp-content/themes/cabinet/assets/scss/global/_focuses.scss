@@ -1,0 +1,73 @@
+@use '../abstracts/colors';
+
+// ---------- Focus Ring System (site-wide) ----------
+
+// Reusable mixin
+@mixin focus-ring(
+  $ring: rgba(colors.$gold, 0.55),     // outer ring color
+  $inner: #fff,                        // inner contrast ring (helps on light bg)
+  $outer-size: 4px,
+  $inner-size: 2px
+) {
+  outline: 0;
+  box-shadow:
+    0 0 0 $inner-size $inner,
+    0 0 0 ($outer-size + $inner-size) $ring;
+}
+
+// Global tweaks
+html { -webkit-tap-highlight-color: transparent; } // iOS tap flash
+:focus { outline-offset: 2px; }                    // nicer default if fallback hits
+
+// Use custom ring when :focus-visible is supported (keyboard users)
+@supports selector(:focus-visible) {
+  :focus:not(:focus-visible) {
+    // Mouse/touch → no ring
+    outline: none;
+    box-shadow: none;
+  }
+
+  :focus-visible {
+    @include focus-ring(); // default brand ring
+    border-color: transparent; // avoid UA outlines on some buttons
+    &::-moz-focus-inner { border: 0; } // Firefox quirk on buttons
+  }
+}
+
+// Fallback for browsers without :focus-visible
+@supports not (selector(:focus-visible)) {
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [role="button"],
+  [tabindex]:not([tabindex="-1"]) {
+    &:focus { @include focus-ring(); }
+  }
+}
+
+// Checkboxes / radios: outline works better than box-shadow
+input[type="checkbox"],
+input[type="radio"] {
+  &:focus-visible {
+    outline: 2px solid rgba(colors.$gold, .85);
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+}
+
+// Utility: use on elements placed over DARK surfaces
+// e.g., .focus-ring--on-dark on a button inside a dark hero
+.focus-ring--on-dark {
+  &:focus-visible {
+    @include focus-ring(rgba(colors.$gold, .6), rgba(255,255,255,.12));
+  }
+}
+
+// Utility: forcibly remove ring (use sparingly)
+.no-focus-ring {
+  &:focus,
+  &:focus-visible { outline: 0 !important; box-shadow: none !important; }
+}
