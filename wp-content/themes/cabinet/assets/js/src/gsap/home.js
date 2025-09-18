@@ -126,21 +126,39 @@ document.addEventListener('DOMContentLoaded', function () {
             const section = q('.cdcc__home__soins');
             if (!section) return;
 
-            // BG fade (non-scrub): white -> greendark when title enters
-            const title = q('.cdcc__home__soins__title', section);
-            gsap.set(section, { backgroundColor: '#ffffff' });
-            gsap.to(section, {
-                backgroundColor: '#3D4C51',
-                duration: 0.8,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: title || section,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
-                }
-            });
+            // ensure initial value (avoid flash)
+            gsap.set(':root', { '--page-bg': '#ffffff' });
 
-            // Lines scrub
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,          // whole section
+                    start: 'top bottom',       // section top meets viewport bottom
+                    end: 'bottom top',         // section bottom meets viewport top
+                    scrub: 0.6,
+                    invalidateOnRefresh: true
+                    // markers: true,
+                }
+            })
+                // white -> #333333 (fast slice)
+                .to(':root', {
+                    '--page-bg': '#333333',
+                    duration: 0.15,
+                    ease: 'none'
+                }, 0)
+                // then -> #3D4C51 across the rest (still one source of truth)
+                .to(':root', {
+                    '--page-bg': '#3D4C51',
+                    duration: 1.25,
+                    ease: 'none'
+                }, '>-0.001');
+
+            // Reduced motion: jump to final color
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                ScrollTrigger.getAll().forEach(st => st.kill());
+                gsap.set(':root', { '--page-bg': '#3D4C51' });
+            }
+
+            // Lines scrub (unchanged)
             const paths = qa('.soins-lines .lines path', section);
             if (paths.length) {
                 paths.forEach(p => {
@@ -166,9 +184,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 tl.to(paths, { stroke: 'rgba(255,255,255,0.45)' }, 0.25);
             }
 
-            // Items
-            revealItemsOnce('.cdcc__home__soins__content .list');
+            // revealItemsOnce('.cdcc__home__soins__content .list');
         })();
+
 
         // TEAM — center-center trigger feel
         (() => {

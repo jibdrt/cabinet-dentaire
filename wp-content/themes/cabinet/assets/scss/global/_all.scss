@@ -1,8 +1,3 @@
-/*
-Theme Name: sitename
-Theme URI:
-Author: Jean-Baptiste Druet - Agence Album
-Author URI: agencealbum.com
-Description: Theme sitename
-Version: 1.0
-*/
+:root { --page-bg: #ffffff; }
+html, body { background: var(--page-bg); }
+.cdcc__home__soins { background: var(--page-bg); }

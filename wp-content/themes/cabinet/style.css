@@ -630,6 +630,18 @@ body.modal-open {
   height: calc(100vh - 92px);
   background: transparent;
 }
+.cdcc__home__hero #svgTooth {
+  position: absolute;
+  top: 7vw;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transform: scaleX(-1);
+  opacity: 0.5;
+}
 .cdcc__home__hero::after {
   content: "";
   position: absolute;
@@ -782,11 +794,17 @@ body.modal-open {
   aspect-ratio: 1/1;
   z-index: 2;
   clip-path: polygon(100% 0, 100% 70%, 70% 100%, 0 100%, 0 0);
+  aspect-ratio: 4/5;
+  background: linear-gradient(#f1f5f9, #fff);
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
 }
 @media screen and (max-width: calc(1000px - 0.02px)) {
   .cdcc__home__hero .cdcc__home__hero__inner .cdcc__home__hero__inner__col.media .inner__media .inner__media__image {
     max-width: unset;
     max-height: 500px;
+    aspect-ratio: 2/2;
   }
 }
 .cdcc__home__hero .cdcc__home__hero__inner .cdcc__home__hero__inner__col.media .inner__media .inner__media__image img {
@@ -829,7 +847,7 @@ body.modal-open {
 }
 .cdcc__home__intro .tooth-path {
   fill: none;
-  stroke: #3D4C51;
+  stroke: #CBAE70;
   stroke-width: 6;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -1306,21 +1324,27 @@ body.modal-open {
 }
 .cdcc__home__urgences .inner {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  --gap: clamp(24px, 3.5vw, 56px);
+  gap: var(--gap);
   width: 80%;
   max-width: 1400px;
   margin: 0 auto;
-  gap: 5vw;
 }
 @media screen and (max-width: calc(1000px - 0.02px)) {
   .cdcc__home__urgences .inner {
+    flex-wrap: wrap;
     flex-direction: column-reverse;
     width: 80%;
     gap: 3rem;
   }
 }
+.cdcc__home__urgences .inner > .col__image,
+.cdcc__home__urgences .inner > .col__content {
+  min-width: 0;
+}
 .cdcc__home__urgences .inner .col__image {
-  flex: 1 1 44%;
+  flex: 1 1 calc(44% - var(--gap) / 2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1349,7 +1373,7 @@ body.modal-open {
   border-radius: 20px;
 }
 .cdcc__home__urgences .inner .col__content {
-  flex: 1 1 56%;
+  flex: 1 1 calc(56% - var(--gap) / 2);
   display: flex;
   align-items: center;
 }
@@ -2405,11 +2429,14 @@ body.modal-open {
   }
 }
 
-/*
-Theme Name: sitename
-Theme URI:
-Author: Jean-Baptiste Druet - Agence Album
-Author URI: agencealbum.com
-Description: Theme sitename
-Version: 1.0
-*/
+:root {
+  --page-bg: #ffffff;
+}
+
+html, body {
+  background: var(--page-bg);
+}
+
+.cdcc__home__soins {
+  background: var(--page-bg);
+}

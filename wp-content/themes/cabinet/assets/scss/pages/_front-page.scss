@@ -7,6 +7,19 @@
     height: calc(100vh - 92px); // full viewport minus header height
     background: transparent;
 
+    #svgTooth {
+        position: absolute;
+        top: 7vw;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none; // avoid interfering with mouse events
+        overflow: hidden;
+        transform: scaleX(-1);
+        opacity: 0.5;
+    }
+
 
     &::after {
         content: "";
@@ -176,11 +189,17 @@
                     aspect-ratio: 1/1;
                     z-index: 2;
                     clip-path: polygon(100% 0, 100% 70%, 70% 100%, 0 100%, 0 0);
-
+                    aspect-ratio: 4 / 5;
+                    background: linear-gradient(#f1f5f9, #fff);
+                    border-radius: 22px;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, .12);
+                    overflow: hidden;
 
                     @include breakpoint-down(large) {
                         max-width: unset;
                         max-height: 500px;
+                        aspect-ratio: 2/2;
+
                     }
 
                     img {
@@ -228,7 +247,7 @@
 
     .tooth-path {
         fill: none; // the drawing effect needs stroke only
-        stroke: colors.$greendark; // or colors.$gold
+        stroke: colors.$gold; // or colors.$gold
         stroke-width: 6;
         stroke-linecap: round;
         stroke-linejoin: round;
@@ -749,20 +768,29 @@
 
     .inner {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap; // stay in a row until large
+        --gap: clamp(24px, 3.5vw, 56px);
+        gap: var(--gap);
         width: 80%;
         max-width: 1400px;
         margin: 0 auto;
-        gap: 5vw;
 
         @include breakpoint-down(large) {
+            flex-wrap: wrap; // can stack under large
             flex-direction: column-reverse;
             width: 80%;
             gap: 3rem;
         }
 
+        // allow flex children to shrink instead of forcing wrap
+        >.col__image,
+        >.col__content {
+            min-width: 0;
+        }
+
         .col__image {
-            flex: 1 1 44%;
+            // 44% minus half the gap so (44 + 56) + gap ≈ 100%
+            flex: 1 1 calc(44% - var(--gap) / 2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -793,7 +821,7 @@
         }
 
         .col__content {
-            flex: 1 1 56%;
+            flex: 1 1 calc(56% - var(--gap) / 2);
             display: flex;
             align-items: center;
 
@@ -901,6 +929,7 @@
         }
     }
 }
+
 
 .cdcc__home__acces {
     width: 100%;

@@ -32,34 +32,34 @@
     });
 
 
-    if (window.innerWidth > 1000) {
-        if (!header) return;
+    // if (window.innerWidth > 1000) {
+    //     if (!header) return;
 
-        let lastScroll = 0;
-        const threshold = 10;      // don’t react to tiny jitters
-        const hideOffset = -header.offsetHeight; // how far to move up
+    //     let lastScroll = 0;
+    //     const threshold = 10;      // don’t react to tiny jitters
+    //     const hideOffset = -header.offsetHeight; // how far to move up
 
-        window.addEventListener("scroll", () => {
-            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    //     window.addEventListener("scroll", () => {
+    //         const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-            if (Math.abs(currentScroll - lastScroll) < threshold) return;
+    //         if (Math.abs(currentScroll - lastScroll) < threshold) return;
 
-            if (currentScroll > lastScroll && currentScroll > header.offsetHeight) {
-                // scrolling down
-                header.style.transform = `translateY(${hideOffset}px)`;
-                header.classList.add("is-compact");
-            } else {
-                // scrolling up
-                header.style.transform = "translateY(0)";
-                if (currentScroll <= 10) {
-                    header.classList.remove("is-compact");
-                }
-            }
+    //         if (currentScroll > lastScroll && currentScroll > header.offsetHeight) {
+    //             // scrolling down
+    //             header.style.transform = `translateY(${hideOffset}px)`;
+    //             header.classList.add("is-compact");
+    //         } else {
+    //             // scrolling up
+    //             header.style.transform = "translateY(0)";
+    //             if (currentScroll <= 10) {
+    //                 header.classList.remove("is-compact");
+    //             }
+    //         }
 
-            lastScroll = currentScroll;
-        });
+    //         lastScroll = currentScroll;
+    //     });
 
-    }
+    // }
 
     // Gestion des ancres #soins, #hours, etc.
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
