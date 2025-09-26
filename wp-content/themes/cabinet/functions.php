@@ -18,13 +18,26 @@ function cabinet_scripts()
 {
     wp_enqueue_style('cabinet-style', get_stylesheet_uri(), array(), CABINET_VERSION);
     wp_enqueue_script('cabinet-script', get_template_directory_uri() . '/assets/js/global.js', array(), CABINET_VERSION, true);
+
+    // icons
     wp_enqueue_script('iconify', 'https://code.iconify.design/2/2.1.2/iconify.min.js', array(), true);
+
+    // defer images loading
     wp_enqueue_script('imagesloaded-js', 'https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js', array(), CABINET_VERSION, true);
+
+    // gsap + scrolltrigger
     wp_enqueue_script('gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js', array(), CABINET_VERSION, true);
     wp_enqueue_script('scrolltrigger', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js', array('gsap'), CABINET_VERSION, true);
+
+    // masonry
     wp_enqueue_script('masonry', 'https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js', array(), CABINET_VERSION, true);
+
+    // viewbox
     wp_enqueue_style('baguettebox-css', 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css', array(), CABINET_VERSION);
     wp_enqueue_script('baguettebox-js', 'https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js', array(), CABINET_VERSION, true);
+
+    // filtering
+    wp_enqueue_script('isotope-js', 'https://cdn.jsdelivr.net/npm/isotope-layout@3/dist/isotope.pkgd.min.js', array(), CABINET_VERSION, true);
 
     //sliders
     wp_enqueue_style('splide-css', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css', array(), CABINET_VERSION);
@@ -55,7 +68,8 @@ if (!function_exists('setupcabinet')):
             array(
                 'Primary' => esc_html__('Menu principal', 'cabinet'),
                 'Secondary' => esc_html__('Menu mobile', 'cabinet'),
-                'Footer' => esc_html__('Menu footer', 'cabinet')
+                'Footer' => esc_html__('Menu footer', 'cabinet'),
+                'Resources' => esc_html__('Menu ressources', 'cabinet')
             )
         );
     }

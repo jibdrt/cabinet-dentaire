@@ -1,3 +1,9 @@
 :root { --page-bg: #ffffff; }
 html, body { background: var(--page-bg); }
 .cdcc__home__soins { background: var(--page-bg); }
+
+.cdcc__home__intro__inner{
+  color: var(--intro-fg, #3D4C51);
+}
+.cdcc__home__intro__inner a,
+.cdcc__home__intro__inner h2{ color: inherit; }

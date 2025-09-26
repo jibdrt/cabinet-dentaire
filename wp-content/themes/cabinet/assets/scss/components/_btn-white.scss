@@ -1,0 +1,51 @@
+@use '../abstracts/colors';
+
+@mixin btn-white($bg: colors.$white,
+    $fg: colors.$greendark,
+    $accent: colors.$gold) {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 14px 18px 14px 16px;
+    // border-radius: 999px;
+    background: transparent;
+    border: 1px solid rgba($bg, 0.18);
+    text-decoration: none;
+    border: 1px solid rgba($bg, 0.18);
+    transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
+
+    &:hover {
+        background: $bg;
+        border: 1px solid rgba($bg, 0.18);
+
+        .btn__text,
+        .btn__icon {
+            color: $fg;
+        }
+    }
+
+    .btn__dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: $accent;
+        flex-shrink: 0;
+    }
+
+    .btn__text {
+        font-family: 'Sebino', sans-serif;
+        font-weight: 400;
+        font-size: clamp(16px, 2vw, 18px);
+        line-height: 1;
+        letter-spacing: 0.5px;
+        color: $bg;
+    }
+
+    .btn__icon {
+        margin-left: 6px;
+        font-size: 1.1rem;
+        line-height: 1;
+        opacity: 0.95;
+        color: $bg;
+    }
+}

@@ -1,87 +1,102 @@
 document.addEventListener('DOMContentLoaded', () => {
   (() => {
-    const svg = document.getElementById('toothSVG');
-    if (!svg) return;
+    const section = document.getElementById('intro-tooth');
+    const wrap    = section?.querySelector('.tooth-wrap');
+    const svg     = section?.querySelector('#toothSVG');
+    if (!section || !wrap || !svg) return;
 
     const paths = Array.from(svg.querySelectorAll('path'));
     const baseStroke = getComputedStyle(document.documentElement)
       .getPropertyValue('--tooth-stroke').trim() || '#CBAE70';
 
-    // Prime strokes and measure
-    const lengths = paths.map(p => {
-      const L = p.getTotalLength();
+    const isMobile = window.matchMedia('(max-width: 999px)').matches;
+    const reduce   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---- make sure we see the whole drawing on mobile
+    // rely on CSS sizing; just avoid stroke overflow + keep thin stroke
+    paths.forEach(p => {
+      const L = (typeof p.getTotalLength === 'function') ? p.getTotalLength() : 0;
       p.style.fill = 'none';
       p.style.stroke = baseStroke;
-      p.style.strokeWidth = '1';
-      p.style.strokeDasharray = L;
-      p.style.strokeDashoffset = L;
-      p.style.transition = 'stroke .25s ease';
-      return L;
+      p.style.strokeWidth = isMobile ? '0.6' : '1.2';
+      if (L) {
+        p.style.strokeDasharray = L;
+        p.style.strokeDashoffset = L;
+      }
+      p.style.vectorEffect = 'non-scaling-stroke';
     });
+    svg.style.overflow = 'visible';
 
-    // Build cumulative table so we can map a single pen position to each path
+    // ---- draw logic
+    const lengths = paths.map(p => (typeof p.getTotalLength === 'function') ? p.getTotalLength() : 0);
     const cum = [];
-    let acc = 0;
-    for (let i = 0; i < lengths.length; i++) {
-      cum[i] = acc;          // start position of path i along the whole route
-      acc += lengths[i];
-    }
-    const totalLen = acc;
+    let total = 0;
+    for (let i = 0; i < lengths.length; i++) { cum[i] = total; total += lengths[i]; }
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      paths.forEach(p => (p.style.strokeDashoffset = 0));
-      return;
-    }
+    // start earlier + partially pre-drawn on mobile
+    const START_VH      = isMobile ? 0.20 : 0.40;
+    const END_OFFSET_VH = isMobile ? 0.45 : 0.55;
+    const START_PCT     = isMobile ? 0.05 : 0.00;
 
     function progressFor(el) {
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      const start = vh * 0.40;
-      const end = r.height + vh * 0.55;
-      const raw = (vh - r.top - start) / (end - start);
+      const start = vh * START_VH;
+      const end   = r.height + vh * END_OFFSET_VH;
+      const raw   = (vh - r.top - start) / (end - start);
       return Math.max(0, Math.min(1, raw));
     }
 
-    let ticking = false;
+    // ---- small parallax on mobile
+    const PARALLAX_MAX = isMobile && !reduce ? 40 : 0; // px downward
 
+    if (reduce) {
+      // draw immediately + no parallax
+      paths.forEach(p => p.style.strokeDashoffset = 0);
+      wrap.style.transform = 'translateY(0px)';
+      return;
+    }
+
+    let rafing = false;
     function render() {
       const t = progressFor(svg);
-      const s = t * totalLen; // current pen position along the entire route
+      const s = total * (START_PCT + (1 - START_PCT) * t);
 
-      paths.forEach((p, i) => {
+      // draw
+      for (let i = 0; i < paths.length; i++) {
         const L = lengths[i];
-        const start = cum[i];
-        const end = start + L;
+        if (!L) continue;
+        const a = cum[i], b = a + L;
+        let off = L;
+        if (s >= b) off = 0;
+        else if (s > a) off = L - (s - a);
+        paths[i].style.strokeDashoffset = off;
+      }
 
-        let offset; // how much of this path is still hidden
-        if (s <= start) {
-          offset = L;                       // not reached yet
-        } else if (s >= end) {
-          offset = 0;                       // fully drawn
-        } else {
-          offset = L - (s - start);         // partially drawn
-        }
-        p.style.strokeDashoffset = offset;
-      });
+      // parallax (downward as we scroll)
+      if (PARALLAX_MAX) {
+        // gentle ease so it feels smooth
+        const eased = Math.pow(Math.min(1, Math.max(0, t)), 0.8);
+        wrap.style.transform = `translateY(${(eased * PARALLAX_MAX).toFixed(2)}px)`;
+      }
 
-      ticking = false;
+      rafing = false;
     }
 
     function onScroll() {
-      if (!ticking) {
+      if (!rafing) {
+        rafing = true;
         requestAnimationFrame(render);
-        ticking = true;
       }
     }
 
     const io = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) onScroll();
     });
-    io.observe(svg);
+    io.observe(section);
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-
-    onScroll(); // initial
+    window.addEventListener('scroll', onScroll,  { passive: true });
+    window.addEventListener('resize', onScroll,  { passive: true });
+    onScroll();
   })();
 });

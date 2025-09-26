@@ -12,8 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Center position of the map
         var centerPosition = {
-            lat: 46.75764045037094,
-            lng: 4.71702667406135
+            lat: 46.75631065177212,
+            lng: 4.71961105713271
+
         };
         // Initialize the map with custom styles
         var map = new google.maps.Map(mapContainer, {
@@ -162,12 +163,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add a marker at the center of the map
 
-        var marker = new google.maps.marker.AdvancedMarkerElement({
+        const marker = new google.maps.Marker({
             position: centerPosition,
-            map: map,
-            icon: markerIcon, // Set custom red icon
-            title: "Cabinet dentaire de la côte chalonnaise" // Tooltip text on hover
+            map,
+            icon: markerIcon, // works here
+            title: 'Cabinet dentaire de la côte chalonnaise'
         });
+
+        // --- Re-center control (custom button) ---
+        (function addRecenterControl() {
+            const initialCenter = { ...centerPosition }; // keep original center
+            const initialZoom = 12;                    // change if you want a different default
+
+            const controlDiv = document.createElement('div');
+            controlDiv.style.padding = '8px';
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'gm-recenter';
+            btn.setAttribute('aria-label', 'Recenter map');
+            btn.innerHTML = `
+                <span class="icon iconify" data-icon="material-symbols-light:recenter-rounded"></span>
+                <span>Recentrer</span>`;
+            btn.onclick = () => {
+                map.panTo(initialCenter);
+                map.setZoom(initialZoom);
+                // tiny bounce to draw attention
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(() => marker.setAnimation(null), 700);
+            };
+
+            controlDiv.appendChild(btn);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
+        })();
+
 
         console.log('Map initialized with center marker:', map);
     }

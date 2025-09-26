@@ -1,5 +1,7 @@
 @use '../abstracts/colors';
 @use '../abstracts/breakpoints' as *;
+@use '../components/btn-green';
+@use '../components/btn-white';
 
 
 .cdcc__home__hero {
@@ -18,29 +20,46 @@
         overflow: hidden;
         transform: scaleX(-1);
         opacity: 0.5;
-    }
-
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 42%;
-        height: 100%;
-        background: colors.$greendark;
-        z-index: -1;
-        pointer-events: none;
 
         @include breakpoint-down(large) {
-            width: 101%;
-            height: 40%;
-            top: auto;
-            bottom: 3rem;
-            right: 0;
-            left: 0;
+            position: absolute;
+            top: 15rem;
+            right: -11rem;
+            left: unset;
+            width: auto;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.5;
+            overflow: visible;
+            transform-box: view-box;
+            transform-origin: 0 0;
+            transform: scale(0.30);
         }
     }
+
+
+    // &::after {
+    //     content: "";
+    //     position: absolute;
+    //     top: 0;
+    //     right: 0;
+    //     width: 42%;
+    //     height: 100%;
+    //     background: colors.$greendark;
+    //     z-index: -1;
+    //     pointer-events: none;
+
+    //     @include breakpoint-down(large) {
+    //         width: 101%;
+    //         height: 40%;
+    //         top: auto;
+    //         bottom: 3rem;
+    //         right: 0;
+    //         left: 0;
+    //     }
+    // }
 
 
     .cdcc__home__hero__inner {
@@ -70,10 +89,6 @@
 
             .inner__content {
 
-                @include breakpoint-down(large) {
-                    padding: 2rem 0;
-                }
-
                 .inner__content__title {
                     margin: 0 0 8px;
 
@@ -81,7 +96,7 @@
                         font-family: "Cormorant Garamond", serif;
                         line-height: 0.95;
                         color: colors.$greendark;
-                        font-size: clamp(40px, 6vw, 102px);
+                        font-size: clamp(58px, 6vw, 102px);
                         font-weight: 400;
                         letter-spacing: 0.02em;
                         text-transform: uppercase;
@@ -118,56 +133,15 @@
                     font-style: italic;
                 }
 
-                .hero__btn {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 9px;
-                    padding: 16px 18px 16px 16px;
-                    border-radius: 999px;
-                    background: colors.$greendark;
-                    text-decoration: none;
-                    border: 1px solid rgba(colors.$greendark, 0.25);
+                .btn--hero {
+                    @include btn-green.btn-green();
 
-                    transition: background 0.18s, border-color 0.18s, box-shadow 0.18s, color 0.18s;
-
-                    &:hover {
-                        background: colors.$white;
-                        border: 1px solid rgba(colors.$greendark, 1);
-
-                        .hero__btn__text {
-                            color: colors.$greendark;
-                        }
-
-                        .hero__btn__icon {
-                            color: colors.$greendark;
-                        }
+                    .btn__icon {
+                        margin-left: 10px;
                     }
 
-                    .hero__btn__dot {
-                        width: 12px;
-                        height: 12px;
-                        border-radius: 50%;
-                        background: colors.$gold;
-                        flex-shrink: 0;
-                    }
-
-                    .hero__btn__text {
-                        position: relative;
-                        top: 1px;
-                        font-family: 'Sebino', sans-serif;
-                        font-weight: 400;
-                        font-size: clamp(12px, 2vw, 20px);
-                        line-height: 1;
-                        letter-spacing: 0.5px;
-                        color: colors.$white;
-                    }
-
-                    .hero__btn__icon {
-                        margin-left: 6px;
-                        font-size: 1.1rem;
-                        line-height: 1;
-                        opacity: 0.95;
-                        color: colors.$white;
+                    &:nth-of-type(1) {
+                        margin-bottom: 1rem;
                     }
                 }
             }
@@ -180,7 +154,7 @@
             .inner__media {
                 position: relative;
                 isolation: isolate;
-                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+                // box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
 
                 .inner__media__image {
 
@@ -199,7 +173,16 @@
                         max-width: unset;
                         max-height: 500px;
                         aspect-ratio: 2/2;
+                    }
 
+                    @include breakpoint-down(large) {
+                        clip-path: polygon(100% 0, 100% 80%, 80% 100%, 0 100%, 0 0);
+                        aspect-ratio: unset;
+                        width: 100%;
+                    }
+
+                    @include breakpoint-down(medium) {
+                        aspect-ratio: 2/2;
                     }
 
                     img {
@@ -213,19 +196,20 @@
             }
         }
     }
+
 }
 
 .cdcc__home__intro {
     width: 100%;
-    padding: 6rem 0;
+    padding: 0 0 6rem 0;
     color: colors.$greendark;
 
     @include breakpoint-down(large) {
-        padding: 4rem 0;
+        padding: 6rem 0;
     }
 
     @include breakpoint-down(medium) {
-        padding: 0 0 3rem 0;
+        padding: 3rem 0;
     }
 
     &::after {
@@ -238,33 +222,53 @@
         opacity: .7;
     }
 
-    .tooth-svg {
-        width: clamp(80px, 8vw, 120px);
-        height: auto;
-        display: block;
-        margin: 0 auto clamp(16px, 3vw, 32px);
-    }
+    .tooth-wrap {
 
-    .tooth-path {
-        fill: none; // the drawing effect needs stroke only
-        stroke: colors.$gold; // or colors.$gold
-        stroke-width: 6;
-        stroke-linecap: round;
-        stroke-linejoin: round;
 
-        // values set dynamically by JS:
-        // stroke-dasharray: var(--len);
-        // stroke-dashoffset: var(--offset);
-        transition: stroke 0.25s ease;
-    }
+        @include breakpoint-down(medium) {
+            margin: 0 auto;
+            width: fit-content;
+        }
 
-    // a11y: if reduced motion, show full drawing
-    @media (prefers-reduced-motion: reduce) {
+        .tooth-svg {
+            width: clamp(80px, 8vw, 120px);
+            height: auto;
+            display: block;
+            margin: 0 auto clamp(16px, 3vw, 32px);
+
+            @include breakpoint-down(medium) {
+                @include breakpoint-down(medium) {
+                    padding: 5rem 0 3rem 0;
+                    width: 10rem;
+                }
+            }
+        }
+
         .tooth-path {
-            stroke-dasharray: 0;
-            stroke-dashoffset: 0;
+            fill: none; // the drawing effect needs stroke only
+            stroke: colors.$gold; // or colors.$gold
+            stroke-width: 1;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+
+            // values set dynamically by JS:
+            // stroke-dasharray: var(--len);
+            // stroke-dashoffset: var(--offset);
+            transition: stroke 0.25s ease;
+        }
+
+        // a11y: if reduced motion, show full drawing
+        @media (prefers-reduced-motion: reduce) {
+            .tooth-path {
+                stroke-dasharray: 0;
+                stroke-dashoffset: 0;
+            }
         }
     }
+
+
+
+
 
     .cdcc__home__intro__inner {
         margin: 0 auto;
@@ -336,16 +340,16 @@
         }
 
 
-        .btn {
+        .btn--video {
             position: absolute;
             bottom: 2rem;
             right: 2rem;
             display: inline-flex;
             align-items: center;
             gap: 9px;
-            padding: 16px 18px 16px 16px;
-            border-radius: 999px;
+            padding: 12.5px 18px 12.5px 16px;
             background: colors.$white;
+            border-radius: 50px;
             color: colors.$white;
             text-decoration: none;
             z-index: 2;
@@ -355,15 +359,18 @@
                 box-shadow 0.18s;
 
             @include breakpoint-down(large) {
-                bottom: 0.5rem;
-                right: 0.5rem;
+                bottom: 0.3rem;
+                right: -1rem;
                 padding: 10px;
+                border-radius: 100%;
             }
 
-            &:hover {
-                padding: 16px 32px 16px 24px;
-                gap: 18px;
-                box-shadow: 0 6px 24px rgba(colors.$greendark, 0.12);
+            @include breakpoint-up(large) {
+                &:hover {
+                    padding: 16px 32px 16px 24px;
+                    gap: 18px;
+                    box-shadow: 0 6px 24px rgba(colors.$greendark, 0.12);
+                }
             }
 
             .btn__dot {
@@ -491,13 +498,9 @@
     }
 
     .cdcc__home__soins__content {
-        width: 70%;
+        width: 80%;
         max-width: 1500px;
         margin: 0 auto;
-
-        @include breakpoint-down(large) {
-            width: 80%;
-        }
 
         .list {
             display: flex;
@@ -533,9 +536,9 @@
                     width: 40%;
                     max-width: 420px;
                     flex-shrink: 0;
-                    border-radius: 6px;
+                    border-radius: 20px;
                     overflow: hidden;
-                    box-shadow: 0 4px 24px rgba(colors.$greendark, 0.08);
+                    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
 
                     @include breakpoint-down(large) {
                         width: 100%;
@@ -583,46 +586,7 @@
                     }
 
                     .btn--soin {
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 9px;
-                        padding: 14px 18px 14px 16px;
-                        border-radius: 999px;
-                        background: colors.$white;
-                        text-decoration: none;
-                        border: 1px solid rgba(colors.$white, 0.18);
-                        transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
-
-                        &:hover {
-                            transform: translateY(-3px);
-                            filter: brightness(1.06);
-                            box-shadow: 0 6px 16px rgba(colors.$greendark, 0.18);
-                        }
-
-                        .btn__dot {
-                            width: 12px;
-                            height: 12px;
-                            border-radius: 50%;
-                            background: colors.$gold;
-                            flex-shrink: 0;
-                        }
-
-                        .btn__text {
-                            font-family: 'Sebino', sans-serif;
-                            font-weight: 400;
-                            font-size: clamp(12px, 2vw, 18px);
-                            line-height: 1;
-                            letter-spacing: 0.5px;
-                            color: colors.$greendark;
-                        }
-
-                        .btn__icon {
-                            margin-left: 6px;
-                            font-size: 1.1rem;
-                            line-height: 1;
-                            opacity: 0.95;
-                            color: colors.$greendark;
-                        }
+                        @include btn-white.btn-white();
                     }
                 }
             }
@@ -633,7 +597,7 @@
 
 .cdcc__home__team {
     width: 100%;
-    padding: 6rem 0;
+    padding: 6rem 0 0 0;
     color: colors.$greendark;
     background: colors.$white;
 
@@ -643,16 +607,19 @@
 
     .cdcc__home__team__title {
         margin: 0 auto 4rem auto;
-        width: 70%;
+        width: 80%;
         max-width: 1500px;
         text-align: right;
         display: flex;
         flex-direction: column;
+        align-items: end;
         gap: 2.5rem;
 
         @include breakpoint-down(large) {
             text-align: left;
-            width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
         }
 
         .title {
@@ -662,6 +629,10 @@
             line-height: 1.1;
             margin: 0 0 1rem;
 
+            @include breakpoint-down(large) {
+                margin: 0;
+            }
+
             span {
                 color: colors.$gold;
             }
@@ -669,77 +640,27 @@
 
         .subtitle {
             font-family: 'Sebino', sans-serif;
-            font-size: clamp(18px, 2.2vw, 28px);
+            font-size: clamp(18px, 2.2vw, 26px);
             font-weight: 300;
             color: colors.$greendark;
             opacity: 0.9;
             margin: 0 auto;
             max-width: 900;
+            line-height: 2.5rem;
         }
 
         .btn--team {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 14px 18px 14px 16px;
-            border-radius: 999px;
-            background: colors.$greendark;
-            text-decoration: none;
-            border: 1px solid rgba(colors.$greendark, 0.18);
-            transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
-            box-shadow: 0 2px 0 rgba(colors.$greendark, 0.10) inset;
-            width: fit-content;
-            margin: 0 0 0 auto;
-
-            @include breakpoint-down(large) {
-                margin: 0;
-            }
-
-            &:hover {
-                transform: translateY(-3px);
-                filter: brightness(1.06);
-                box-shadow: 0 6px 16px rgba(colors.$greendark, 0.18);
-            }
-
-            .btn__dot {
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                background: colors.$gold;
-                flex-shrink: 0;
-            }
-
-            .btn__text {
-                font-family: 'Sebino', sans-serif;
-                font-weight: 400;
-                font-size: clamp(12px, 2vw, 18px);
-                line-height: 1;
-                letter-spacing: 0.5px;
-                color: colors.$white;
-            }
-
-            .btn__icon {
-                margin-left: 6px;
-                font-size: 1.1rem;
-                line-height: 1;
-                opacity: 0.95;
-                color: colors.$white;
-            }
+            @include btn-green.btn-green();
         }
     }
 
     .cdcc__home__team__content {
-        width: 70%;
-        max-width: 1500px;
+        width: 100%;
         margin: 0 auto;
 
-        @include breakpoint-down(large) {
-            width: 100%;
-        }
 
         .image {
             overflow: hidden;
-            border-radius: 20px;
 
             @include breakpoint-down(large) {
                 border-radius: unset;
@@ -881,50 +802,9 @@
                     }
                 }
 
-                .btn--urgences {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 10px;
-                    padding: 16px 22px 16px 18px;
-                    border-radius: 999px;
-                    background: colors.$gold;
-                    text-decoration: none;
-                    border: 1px solid rgba(colors.$white, 0.18);
-                    transition: transform 0.18s, filter 0.18s, box-shadow 0.18s;
-                    box-shadow: 0 2px 0 rgba(colors.$gold, 0.10) inset;
-                    margin-top: 0.5rem;
-
-                    &:hover {
-                        transform: translateY(-3px) scale(1.03);
-                        filter: brightness(1.08);
-                        box-shadow: 0 8px 24px rgba(colors.$gold, 0.18);
-                    }
-
-                    .btn__dot {
-                        width: 12px;
-                        height: 12px;
-                        border-radius: 50%;
-                        background: colors.$white;
-                        flex-shrink: 0;
-                    }
-
-                    .btn__text {
-                        font-family: 'Sebino', sans-serif;
-                        font-weight: 400;
-                        font-size: clamp(13px, 2vw, 20px);
-                        line-height: 1;
-                        letter-spacing: 0.5px;
-                        color: colors.$greendark;
-                        margin-top: 2.5px;
-                    }
-
-                    .btn__icon {
-                        font-size: 1.3rem;
-                        line-height: 1;
-                        opacity: 0.95;
-                        color: colors.$greendark;
-                    }
-                }
+                // .btn--urgences {
+                //     @include btn-white.btn-white();
+                // }
             }
         }
     }
@@ -934,13 +814,6 @@
 .cdcc__home__acces {
     width: 100%;
 
-    @include breakpoint-down(large) {
-        padding: 0 0 4rem 0;
-    }
-
-    @include breakpoint-down(medium) {
-        padding: 0 0 3rem 0;
-    }
 
     .cdcc__home__acces__title {
         width: 100%;
@@ -975,6 +848,32 @@
             @include breakpoint-down(medium) {
                 height: 460px;
             }
+
+            .gm-recenter {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                padding: .5rem .75rem;
+                background: #fff;
+                color: #333;
+                border: 0;
+                border-radius: 6px;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+                font: 500 14px/1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+                cursor: pointer;
+            }
+
+            .gm-recenter:hover {
+                background: #f6f6f6;
+            }
+
+            .gm-recenter:active {
+                transform: translateY(1px);
+            }
+
+            .gm-recenter .icon {
+                font-size: 2rem;
+            }
         }
     }
 }
@@ -987,10 +886,11 @@
 
     @include breakpoint-down(large) {
         padding: 4rem 0;
+        ;
     }
 
     @include breakpoint-down(medium) {
-        padding: 0 0 3rem 0;
+        padding: 2rem 0 3rem 0;
     }
 
     .cdcc__home__hours__title {
@@ -1008,6 +908,10 @@
             width: 70%;
             margin: 0 auto;
             padding-bottom: 2rem;
+
+            @include breakpoint-down(xlarge) {
+                width: 80%;
+            }
         }
     }
 
@@ -1015,6 +919,10 @@
         width: 70%;
         max-width: 1500px;
         margin: 0 auto;
+
+        @include breakpoint-down(xlarge) {
+            width: 80%;
+        }
 
         .list {
             font-family: 'Sebino', sans-serif;

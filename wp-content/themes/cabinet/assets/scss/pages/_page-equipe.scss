@@ -127,15 +127,22 @@
             width: 80%;
             margin: 4rem auto 0 auto;
 
-            .title {
-                font-family: 'Cormorant Garamond', serif;
+            h1 {
+                font-family: "Cormorant Garamond", serif;
                 font-weight: 400;
                 text-transform: uppercase;
                 letter-spacing: 0.08em;
                 line-height: 1.05;
-                margin: 2rem 0 3rem 0;
-                font-size: clamp(28px, 4vw, 48px);
+                // margin: 0 0 clamp(8px, 1.5vw, 16px);
+                font-size: clamp(36px, 6vw, 72px);
+                margin-bottom: 1rem;
                 color: colors.$greendark;
+
+                @include breakpoint-down(smallheight) {
+                    letter-spacing: 0.06em; // slight tighten on short viewports
+                }
+
+
             }
 
             .subtitle {
@@ -150,51 +157,70 @@
             }
         }
 
+        .team-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem 1rem;
+            margin: 1.25rem 0;
+        }
+
+        .team-filters button {
+            border: 0;
+            padding: .45rem .8rem;
+            border-radius: 999px;
+            background: #eee;
+            color: #333;
+            cursor: pointer;
+            font: 500 14px/1.1 system-ui, sans-serif;
+        }
+
+        .team-filters button.is-active {
+            background: #3D4C51;
+            color: #fff;
+        }
+
+        .list {
+            margin: 1rem 0;
+        }
+
+
         .equipe__container {
-            border: 1px solid red;
 
             .list {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 3.5%;
+                // gap: 3.5%;
                 height: auto;
-                width: 1200px;
+                width: 80%;
                 list-style: none;
                 margin: auto;
                 padding-bottom: 4rem;
                 // border: 1px solid red;
 
-                @include breakpoint-down(xxlarge) {
-                    width: 1100px;
-                }
-
-                @include breakpoint-down(xlarge) {
-                    gap: 1.5%;
-                    width: 950px;
-                }
-
-                @include breakpoint-down(mlarge) {
-                    width: 900px;
-                }
-
-                @include breakpoint-down(large) {
-                    width: 80%;
-                }
+                // &.list--praticiens,
+                // &.list--assistantes {
+                //     gap: 3.5%;
+                // }
 
                 .team__item {
-                    border: 1px solid rgba(61, 76, 81, 0.3);
                     border-radius: 28px;
                     flex: 1 1 clamp(280px, 28%, 360px);
                     width: 30%;
                     max-width: 314px;
                     min-width: 314px;
-                    padding: 2rem 1rem;
+                    padding: 0;
                     margin-top: 3.5%;
                     height: auto;
                     display: flex;
                     flex-direction: column;
-                    align-items: center;
+                    align-items: start;
                     cursor: pointer;
+                    margin-left: 1.75%;
+                    margin-right: 1.75%;
+
+                    &.is-staff {
+                        pointer-events: none;
+                    }
 
 
                     @include breakpoint-down(xlarge) {
@@ -212,6 +238,7 @@
 
                     @include breakpoint-down(large) {
                         margin-bottom: 2rem;
+                        max-width: 314px;
                     }
 
 
@@ -287,24 +314,37 @@
                         font-size: clamp(0.75rem, 1.6vw, 0.9rem);
                         font-weight: 300;
                         width: fit-content;
-                        margin: 0 auto 2rem;
+                        margin: 0 auto 0.8rem 0;
                         border-radius: 28px;
                         letter-spacing: 0.06em;
+
+                        &.is-staff {
+                            background: colors.$gold;
+                            color: colors.$white;
+                        }
                     }
 
-                    /* image frame */
                     .team__item__image {
+                        position: relative; // optional, handy for future effects
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        width: 65%;
+                        width: 100%;
                         min-width: 12rem;
                         min-height: 16rem;
                         margin: 0 auto 1.5rem;
-                        clip-path: polygon(100% 0, 100% 70%, 70% 100%, 0 100%, 0 0);
-                        border-radius: 22px;
+                        clip-path: polygon(100% 0, 100% 84%, 84% 100%, 0 100%, 0 0);
+                        border-radius: 16px;
                         overflow: hidden;
                         aspect-ratio: 3 / 4;
+                        cursor: pointer;
+
+                        @include breakpoint-down(medium) {
+                            clip-path: polygon(100% 0, 100% 84%, 84% 100%, 0 100%, 0 0);
+                            width: 100%;
+                            min-width: 10rem;
+                            min-height: 14rem;
+                        }
 
                         img {
                             width: 100%;
@@ -312,23 +352,45 @@
                             display: block;
                             object-fit: cover;
                             object-position: top;
+
+                            // start slightly zoomed in, then "zoom OUT" on hover
+                            transform: scale(1.04);
+                            transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+                            will-change: transform;
+                            backface-visibility: hidden; // avoids subpixel shimmer
+                        }
+
+                        // only apply on devices that actually hover
+                        @media (hover: hover) and (pointer: fine) {
+
+                            &:hover img,
+                            &:focus-visible img {
+                                // keyboard focus gets the same effect
+                                transform: scale(1);
+                            }
                         }
                     }
+
+                    // accessibility: respect reduced motion
+                    @media (prefers-reduced-motion: reduce) {
+                        .team__item__image img {
+                            transform: none;
+                            transition: none;
+                        }
+                    }
+
 
                     /* info */
                     .team__item__info {
                         display: flex;
                         flex-direction: column;
-                        align-items: center;
                         gap: 0.5rem;
-                        text-align: center;
 
                         .team__item__title {
                             font-family: 'Cormorant Garamond', serif;
                             font-weight: 500;
                             font-size: clamp(1.25rem, 2.8vw, 2rem); // scales between ~20px–32px
                             color: colors.$greendark;
-                            margin: 0 0 0.5rem 0;
                             max-width: 80%;
                             line-height: 1;
                         }
@@ -341,21 +403,6 @@
                             margin: 0;
                             letter-spacing: 0.06em;
                             opacity: 0.9;
-                        }
-                    }
-                }
-
-                /* Responsive stacking on small screens */
-                @media (max-width: 768px) {
-                    .team__item {
-                        flex: 1 1 100%;
-                        max-width: 100%;
-                        padding: 1.5rem 1rem;
-
-                        .team__item__image {
-                            width: 75%;
-                            min-width: 10rem;
-                            min-height: 14rem;
                         }
                     }
                 }

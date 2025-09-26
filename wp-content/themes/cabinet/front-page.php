@@ -30,11 +30,34 @@ get_header(); ?>
                         L’excellence dentaire au service de votre bien-être et de votre sourire et de lorem ipsum dolor sit amet et consectetur adipiscing elit.
                     </h2>
 
-                    <a href="/rdv" class="hero__btn">
-                        <span class="hero__btn__dot"></span>
-                        <span class="hero__btn__text">Prendre Rendez-vous</span>
-                        <span class="hero__btn__icon iconify" data-icon="tabler:arrow-right"></span>
+                    <?php
+                    // Get ACF option fields
+                    $phone_raw = get_field('phone', 'option'); // e.g. "03 85 00 00 00"
+                    $email_raw = get_field('mail',  'option'); // e.g. "contact@cabinet.fr"
+
+                    // Build tel: href (keep digits and leading +)
+                    $phone_num  = $phone_raw ? preg_replace('/[^\d+]/', '', $phone_raw) : '';
+                    $tel_href   = $phone_num ? 'tel:' . $phone_num : '';
+
+                    // Build mailto: href (sanitize + obfuscate)
+                    $email_sane = $email_raw ? sanitize_email($email_raw) : '';
+                    $mail_href  = $email_sane ? 'mailto:' . antispambot($email_sane) : '';
+                    ?>
+
+                    <?php if ($tel_href): ?>
+                        <a href="<?php echo esc_attr($tel_href); ?>" class="btn btn--hero" aria-label="Appeler le cabinet <?php echo esc_attr($phone_raw); ?>">
+                            <span class="btn__dot"></span>
+                            <span class="btn__text">Appeler le cabinet</span>
+                            <span class="btn__icon iconify" data-icon="tabler:phone"></span>
+                        </a>
+                    <?php endif; ?>
+
+                    <a href="/contact" class="btn btn--hero" aria-label="Envoyer un e-mail au cabinet">
+                        <span class="btn__dot"></span>
+                        <span class="btn__text">RDV par mail</span>
+                        <span class="btn__icon iconify" data-icon="tabler:mail"></span>
                     </a>
+
 
                 </div>
             </div>
@@ -110,7 +133,7 @@ get_header(); ?>
                 </div>
             <?php endif; ?>
 
-            <a href="/le-cabinet" class="btn">
+            <a href="/le-cabinet" class="btn btn--video">
                 <span class="btn__dot"></span>
                 <span class="btn__text">Le cabinet</span>
                 <span class="btn__icon iconify" data-icon="tabler:arrow-right"></span>
@@ -235,11 +258,11 @@ get_header(); ?>
                         <?php echo isset($urgences['text']) ? $urgences['text'] : ''; ?>
                     </div>
 
-                    <a href="/urgences" class="btn btn--urgences">
+                    <!-- <a href="/urgences" class="btn btn--urgences">
                         <span class="btn__dot"></span>
                         <span class="btn__text">Urgences dentaires</span>
                         <span class="btn__icon iconify" data-icon="tabler:arrow-right"></span>
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>

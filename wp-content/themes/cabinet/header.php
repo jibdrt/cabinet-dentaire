@@ -11,6 +11,7 @@
         <title><?php bloginfo('name'); ?><?php wp_title('|', true, 'left'); ?></title>
     <?php endif; ?>
     <?php wp_head(); ?>
+    <script>document.documentElement.classList.add('js');</script>
 </head>
 
 <body <?php body_class(); ?>>

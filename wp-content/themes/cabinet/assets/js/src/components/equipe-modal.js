@@ -12,8 +12,28 @@
   const qualEl   = modal.querySelector('#teamModalQualif');
   const descEl   = modal.querySelector('#teamModalDesc');
   const specsEl  = modal.querySelector('#teamModalSpecialisations');
+  const hoursEl  = modal.querySelector('#teamModalHours');
 
-  const items = Array.from(document.querySelectorAll('.team__item'));
+  // Helper: is this item allowed in the modal/gallery?
+  function isAllowed(li) {
+    // Preferred: honor an explicit flag if you add it in PHP
+    if (li.dataset.canModal === '0') return false;
+
+    // Fallback: exclude by ACF "type" label text if it contains "assistante" (plural/s, accents not required)
+    const typeText = (li.dataset.type || '').toLowerCase();
+    if (/\bassistant(e|es)?\b/.test(typeText)) return false;
+
+    // Optional: if you already add a class, you can use: if (!li.classList.contains('is-praticien')) return false;
+    return true;
+  }
+
+  // Build the filtered gallery list and assign modal indices
+  const allItems = Array.from(document.querySelectorAll('.team__item'));
+  const items = allItems.filter(isAllowed);
+  items.forEach((el, idx) => { el.dataset.modalIndex = String(idx); });
+
+  if (!items.length) return; // nothing to show at all
+
   let index = -1;
   let lastFocused = null;
 
@@ -25,6 +45,7 @@
     const type = li.dataset.type || '';
     const qual = li.dataset.qualification || '';
     const img  = li.dataset.image || '';
+    const hours = li.dataset.hours || '';
     const html = li.querySelector('.team__item__details')?.innerHTML || '';
 
     imgEl.src = img || '';
@@ -32,14 +53,14 @@
     titleEl.textContent = name;
     typeEl.textContent  = type;
     qualEl.textContent  = qual;
+    hoursEl.innerHTML = hours;
 
-    // hide the dot if one of the parts is empty
     modal.querySelector('.cdcc__modal__meta .sep').style.display =
       (type && qual) ? 'inline' : 'none';
 
     descEl.innerHTML = html;
 
-    // Specialisations from data-specs (JSON array)
+    // Specialisations
     specsEl.innerHTML = '';
     let specs = [];
     try { specs = JSON.parse(li.dataset.specs || '[]'); } catch (e) { specs = []; }
@@ -53,13 +74,16 @@
     } else {
       specsEl.style.display = 'none';
     }
+
+    // Disable nav if single item
+    const single = items.length <= 1;
+    btnPrev.disabled = single;
+    btnNext.disabled = single;
   }
 
   function open(idx) {
-    if (!items.length) return;
     index = (idx >= 0 ? idx : 0);
     render(index);
-
     lastFocused = document.activeElement;
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
@@ -77,18 +101,26 @@
   function next() { index = (index + 1) % items.length; render(index); }
   function prev() { index = (index - 1 + items.length) % items.length; render(index); }
 
-  // Delegated open (click + Enter key)
+  // Delegated open — only from *allowed* items
   document.addEventListener('click', (e) => {
     const li = e.target.closest('.team__item');
     if (!li) return;
+
+    // Ignore disallowed items
+    if (!isAllowed(li)) return;
+
     e.preventDefault();
-    open(Number(li.dataset.index || 0));
+    const modalIndex = Number(li.dataset.modalIndex ?? -1);
+    if (modalIndex >= 0) open(modalIndex);
   });
+
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const li = document.activeElement?.closest?.('.team__item');
-      if (li) { e.preventDefault(); open(Number(li.dataset.index || 0)); }
-    }
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const li = document.activeElement?.closest?.('.team__item');
+    if (!li || !isAllowed(li)) return;
+    e.preventDefault();
+    const modalIndex = Number(li.dataset.modalIndex ?? -1);
+    if (modalIndex >= 0) open(modalIndex);
   });
 
   // Modal controls
@@ -100,8 +132,8 @@
   document.addEventListener('keydown', (e) => {
     if (modal.getAttribute('aria-hidden') === 'true') return;
     if (e.key === 'Escape') close();
-    if (e.key === 'ArrowRight') next();
-    if (e.key === 'ArrowLeft') prev();
+    if (e.key === 'ArrowRight' && items.length > 1) next();
+    if (e.key === 'ArrowLeft'  && items.length > 1) prev();
   });
 
   // Simple focus trap

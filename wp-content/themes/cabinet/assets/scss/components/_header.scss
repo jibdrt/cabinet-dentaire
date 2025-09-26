@@ -276,6 +276,11 @@ $bp-md: 1024px;
     background: transparent;
     cursor: pointer;
 
+    @include breakpoint-down(large) {
+      right: 1.2rem;
+      top: 22%;
+    }
+
     .iconify {
       font-size: 22px;
       color: colors.$greendark;

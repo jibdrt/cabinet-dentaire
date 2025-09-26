@@ -83,23 +83,81 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // ---------- Page sections
 
-        // HERO
-        (() => {
-            const section = q('.cdcc__home__hero');
-            if (!section) return;
-            const title = q('.inner__content__title', section);
-            const subtitle = q('.inner__content__subtitle', section);
-            const btn = q('.hero__btn', section);
+        // HERO intro: cascade on page load (no scroll trigger), images untouched
+(() => {
+  const section = q('.cdcc__home__hero');
+  if (!section) return;
 
-            gsap.set([title, subtitle, btn], { autoAlpha: 0, y: 24 });
-            const tl = gsap.timeline({
-                scrollTrigger: { trigger: section, start: 'top 85%', toggleActions: 'play none none none' }
-            });
-            tl.to(title, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out' })
-                .to(q('.inner__content__separator', section), { autoAlpha: 1, scaleX: 1, duration: 0.5, ease: 'power2.out' }, '-=0.5')
-                .to(subtitle, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.3')
-                .to(btn, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '-=0.4');
-        })();
+  const content  = q('.cdcc__home__hero__inner .content .inner__content', section) || q('.inner__content', section);
+  if (!content) return;
+
+  const titleWrap = q('.inner__content__title', content);
+  const h1        = titleWrap?.querySelector('h1');
+  const subline   = titleWrap?.querySelector('span');
+  const hr        = q('.inner__content__separator', content);
+  const subtitle  = q('.inner__content__subtitle', content);
+  const buttons   = qa('.btn.btn--hero', content);
+  const dots      = qa('.btn__dot', content);
+  const icons     = qa('.btn__icon', content);
+  const svg       = section.querySelector('svg');
+
+  const isSmall = window.matchMedia('(max-width: 999px)').matches;
+
+  // Reduced motion: show immediately
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.set([h1, subline, hr, subtitle, buttons, dots, icons, svg], { clearProps: 'all' });
+    return;
+  }
+
+  // Initial states
+  if (h1)       gsap.set(h1,       { autoAlpha: 0, y: 28 });
+  if (subline)  gsap.set(subline,  { autoAlpha: 0, y: 24 });
+  if (hr)       gsap.set(hr,       { autoAlpha: 0, scaleX: 0, transformOrigin: 'left center' });
+  if (subtitle) gsap.set(subtitle, { autoAlpha: 0, y: 22 });
+
+  if (buttons.length) {
+    gsap.set(buttons, { autoAlpha: 0, y: 18 });
+    if (dots.length)  gsap.set(dots,  { scale: 0, transformOrigin: '50% 50%' });
+    if (icons.length) gsap.set(icons, { x: -8 });
+  }
+
+  // Hide SVG only on small screens so we can reveal it later
+  if (svg) {
+    if (isSmall) {
+      gsap.set(svg, { autoAlpha: 0 });
+    } else {
+      gsap.set(svg, { clearProps: 'opacity,visibility' }); // no delay ≥1000px
+    }
+  }
+
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.05 });
+
+  if (h1)       tl.to(h1,       { autoAlpha: 1, y: 0, duration: 0.8 });
+  if (subline)  tl.to(subline,  { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.45');
+  if (hr)       tl.to(hr,       { autoAlpha: 1, scaleX: 1, duration: 0.45, ease: 'power2.out' }, '-=0.25');
+  if (subtitle) tl.to(subtitle, { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.05');
+
+  if (buttons.length) {
+    tl.to(buttons, { autoAlpha: 1, y: 0, duration: 0.55, ease: 'power2.out', stagger: 0.12 }, '-=0.05')
+      .to(dots,    { scale: 1, duration: 0.35, ease: 'back.out(2)', stagger: 0.12 }, '<')
+      .to(icons,   { x: 0, duration: 0.35, ease: 'power2.out', stagger: 0.12 }, '<+0.05')
+      .add(() => { gsap.set(icons, { clearProps: 'opacity,visibility' }); });
+  }
+
+  // 👉 Reveal SVG only under 1000px (after buttons)
+  if (svg && isSmall) {
+    tl.to(svg, { autoAlpha: 1, duration: 0.45, ease: 'power2.out' }, '>');
+    // or with a tiny lift:
+    // tl.fromTo(svg, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '>');
+  }
+
+  document.addEventListener('iconify-icon-updated', () => {
+    gsap.set(icons, { clearProps: 'opacity,visibility' });
+  }, { once: true });
+})();
+
+
+
 
         // INTRO
         (() => {
@@ -123,40 +181,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // SOINS — bg fade on enter, lines scrub across whole section, items reveal
         (() => {
+
+
+
             const section = q('.cdcc__home__soins');
             if (!section) return;
 
-            // ensure initial value (avoid flash)
-            gsap.set(':root', { '--page-bg': '#ffffff' });
+            const ROOT = document.documentElement;
+            const INTRO = document.querySelector('.cdcc__home__intro__inner');
 
-            gsap.timeline({
+            gsap.set(ROOT, { '--page-bg': '#ffffff' });
+            gsap.set(INTRO, { '--intro-fg': '#3D4C51' }); // start dark text
+
+            const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: section,          // whole section
-                    start: 'top bottom',       // section top meets viewport bottom
-                    end: 'bottom top',         // section bottom meets viewport top
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
                     scrub: 0.6,
-                    invalidateOnRefresh: true
-                    // markers: true,
+                    invalidateOnRefresh: true,
                 }
-            })
-                // white -> #333333 (fast slice)
-                .to(':root', {
-                    '--page-bg': '#333333',
-                    duration: 0.15,
-                    ease: 'none'
-                }, 0)
-                // then -> #3D4C51 across the rest (still one source of truth)
-                .to(':root', {
-                    '--page-bg': '#3D4C51',
-                    duration: 1.25,
-                    ease: 'none'
-                }, '>-0.001');
+            });
 
-            // Reduced motion: jump to final color
+            tl.to({}, { duration: 0.08 }); // small hold
+
+            // label so bg + text change together
+            tl.add('bgTo333');
+
+            // 1) #fff → #333
+            tl.to(ROOT, { '--page-bg': '#333333', duration: 0.18, ease: 'power1.out' }, 'bgTo333');
+
+            // 👉 switch intro text to white at the same moment
+            tl.to(INTRO, { '--intro-fg': '#ffffff', duration: 0.18, ease: 'power1.out' }, 'bgTo333');
+
+            // 2) #333 → #3D4C51 (keep text white)
+            tl.to(ROOT, { '--page-bg': '#3D4C51', duration: 0.74, ease: 'none' });
+
+            // Reduced motion
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 ScrollTrigger.getAll().forEach(st => st.kill());
-                gsap.set(':root', { '--page-bg': '#3D4C51' });
+                gsap.set(ROOT, { '--page-bg': '#3D4C51' });
+                gsap.set(INTRO, { '--intro-fg': '#ffffff' });
             }
+
 
             // Lines scrub (unchanged)
             const paths = qa('.soins-lines .lines path', section);
@@ -166,26 +233,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
                 });
 
-                const tl = gsap.timeline({
+                const ltl = gsap.timeline({
                     defaults: { ease: 'none' },
                     scrollTrigger: {
                         trigger: section,
                         start: 'top 90%',
                         end: 'bottom 10%',
                         scrub: true,
-                        // markers: true,
                     }
                 });
 
                 paths.forEach((p, i) => {
                     const len = p.getTotalLength();
-                    tl.fromTo(p, { strokeDashoffset: len }, { strokeDashoffset: 0 }, i * 0.1);
+                    ltl.fromTo(p, { strokeDashoffset: len }, { strokeDashoffset: 0 }, i * 0.1);
                 });
-                tl.to(paths, { stroke: 'rgba(255,255,255,0.45)' }, 0.25);
+                ltl.to(paths, { stroke: 'rgba(255,255,255,0.45)' }, 0.25);
             }
-
-            // revealItemsOnce('.cdcc__home__soins__content .list');
         })();
+
 
 
         // TEAM — center-center trigger feel

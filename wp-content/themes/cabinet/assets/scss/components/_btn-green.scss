@@ -1,0 +1,54 @@
+@use '../abstracts/colors';
+
+@mixin btn-green($bg: colors.$white,
+    $fg: colors.$greendark,
+    $accent: colors.$gold) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    gap: 9px;
+    padding: 16px 18px 16px 16px;
+    background: $bg;
+    text-decoration: none;
+    border: 1px solid rgba($fg, 0.25);
+    transition: background .18s, border-color .18s, box-shadow .18s, color .18s;
+    z-index: 3;
+
+    &:hover {
+        background: colors.$greendark;
+        border-color: rgba($bg, 1);
+
+        .btn__text,
+        .btn__icon {
+            color: $bg;
+        }
+    }
+
+    .btn__dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: $accent;
+        flex-shrink: 0;
+    }
+
+    .btn__text {
+        position: relative;
+        top: 1px;
+        font-family: 'Sebino', sans-serif;
+        font-weight: 400;
+        font-size: clamp(16px, 2vw, 20px);
+        line-height: 1;
+        letter-spacing: .5px;
+        color: $fg;
+    }
+
+    .btn__icon {
+        margin-left: 6px;
+        font-size: 1.1rem;
+        line-height: 1;
+        opacity: .95;
+        color: $fg;
+    }
+}

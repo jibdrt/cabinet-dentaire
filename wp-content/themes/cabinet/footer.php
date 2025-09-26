@@ -30,7 +30,18 @@
                 </div>
             </div>
         </div>
-        <div class="right">
+        <div class="right"> <?php
+                            wp_nav_menu([
+                                'theme_location' => 'primary',
+                                'menu'           => 'Menu ressources',
+                                'container'      => false,
+                                'menu_class'     => 'footer__resources',
+                                'fallback_cb'    => false,
+                                'depth'          => 2,
+                                'link_before'    => '',
+                                'link_after'     => '',
+                            ]);
+                            ?>
             <?php
             wp_nav_menu([
                 'theme_location' => 'primary',

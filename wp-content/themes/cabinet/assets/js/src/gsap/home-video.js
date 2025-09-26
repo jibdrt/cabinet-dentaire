@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // zoom video
-  tl.to(video, { scale: 1.15 }, 0);
+  tl.to(video, { scale: 1.25 }, 0);
 
   // flatten corners on the mask wrapper
   tl.to(frame, { borderRadius: 0 }, 0);
