@@ -1,0 +1,4 @@
+// Reusable content title mixin (font-size only)
+@mixin content-title-size($min: 24px, $pref: 4vw, $max: 48px) {
+    font-size: clamp($min, $pref, $max);
+}

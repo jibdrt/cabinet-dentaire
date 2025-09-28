@@ -20,20 +20,14 @@ get_header(); ?>
 
             <div class="content">
                 <h1><?php the_title(); ?></h1>
-                <?php if (!empty($hero['subtitle'])): ?>
-                    <p class="subtitle"><?php echo esc_html($hero['subtitle']); ?></p>
-                <?php endif; ?>
             </div>
         </div>
     </section>
     <section class="cdcc__contact__content">
         <div class="intro">
-            <h2 class="title">
-                <?php echo esc_html($intro['title']); ?>
-            </h2>
-            <div class="subtitle">
-                <?php echo $intro['subtitle']; ?>
-            </div>
+            <?php if (!empty($hero['subtitle'])): ?>
+                <p class="subtitle"><?php echo esc_html($hero['subtitle']); ?></p>
+            <?php endif; ?>
         </div>
         <div class="form__container">
             <?php

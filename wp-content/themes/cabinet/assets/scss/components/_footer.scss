@@ -39,7 +39,7 @@
                     width: 20rem;
 
                     @include breakpoint-down(large) {
-                      width: 14rem;
+                        width: 14rem;
                     }
                 }
             }
@@ -105,7 +105,8 @@
                 width: 100%;
             }
 
-            .footer__menu, .footer__resources {
+            .footer__menu,
+            .footer__resources {
                 display: flex;
                 flex-direction: column;
                 gap: 5px;

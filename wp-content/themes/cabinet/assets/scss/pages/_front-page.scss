@@ -4,6 +4,20 @@
 @use '../components/btn-white';
 
 
+.hero-armed .cdcc__home__hero .inner__content__title h1,
+.hero-armed .cdcc__home__hero .inner__content__title span,
+.hero-armed .cdcc__home__hero .inner__content__separator,
+.hero-armed .cdcc__home__hero .inner__content__subtitle,
+.hero-armed .cdcc__home__hero .inner__content .btn.btn--hero,
+.hero-armed .cdcc__home__hero .inner__content .btn.btn--hero .btn__dot,
+.hero-armed .cdcc__home__hero .inner__content .btn.btn--hero .btn__icon,
+.hero-armed .cdcc__home__hero svg {
+    opacity: 0;
+    visibility: hidden;
+    /* avoids focus/selection before reveal */
+}
+
+
 .cdcc__home__hero {
     position: relative;
     height: calc(100vh - 92px); // full viewport minus header height
@@ -802,9 +816,9 @@
                     }
                 }
 
-                // .btn--urgences {
-                //     @include btn-white.btn-white();
-                // }
+                .btn--urgences {
+                    @include btn-white.btn-white();
+                }
             }
         }
     }

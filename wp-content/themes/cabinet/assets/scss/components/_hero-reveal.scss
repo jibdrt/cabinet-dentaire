@@ -1,0 +1,32 @@
+/* Vertical slice reveal overlay */
+.slice-reveal {
+    position: absolute;
+    inset: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+    /* above img, below text (your h1 has z-index:2) */
+
+    .slice {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        /* set via JS per-slice */
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        /* adjusted in JS for proper fit */
+        background-position: center;
+        will-change: transform, opacity;
+        filter: brightness(0.35); // darken
+    }
+}
+
+/* reduce motion: skip fancy effect */
+@media (prefers-reduced-motion: reduce) {
+    .slice-reveal {
+        display: none !important;
+    }
+}

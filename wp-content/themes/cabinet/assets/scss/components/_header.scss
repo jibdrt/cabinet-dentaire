@@ -277,8 +277,15 @@ $bp-md: 1024px;
     cursor: pointer;
 
     @include breakpoint-down(large) {
+      right: 2.2rem;
+      top: 3.2rem;
+      z-index: 9;
+    }
+
+    @include breakpoint-down(medium) {
       right: 1.2rem;
-      top: 22%;
+      top: 1.5rem;
+      z-index: 9;
     }
 
     .iconify {

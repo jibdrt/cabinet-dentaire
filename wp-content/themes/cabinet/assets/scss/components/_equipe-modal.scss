@@ -54,6 +54,14 @@ body.modal-open {
         background: #f1f5f9;
         overflow: hidden;
 
+        @include breakpoint-down(large) {
+            height: 20rem;
+        }
+
+        @include breakpoint-down(medium) {
+            height: 15rem;
+        }
+
 
         img {
             width: 100%;
@@ -65,9 +73,14 @@ body.modal-open {
     }
 
     .cdcc__modal__content {
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
         h3 {
             margin: 0 0 8px;
-            font-size: clamp(22px, 2.6vw, 32px);
+            font-size: clamp(18px, 2.6vw, 32px);
             line-height: 1.1;
             color: colors.$greendark;
             text-transform: uppercase;
@@ -76,6 +89,7 @@ body.modal-open {
         }
 
         .cdcc__modal__meta {
+            display: none;
             margin: 0 0 14px;
             color: colors.$greendark;
 
@@ -90,6 +104,11 @@ body.modal-open {
             font-family: 'Sebino', sans-serif;
             font-weight: 300;
 
+
+            @include breakpoint-down(medium) {
+                font-size: 14px;
+            }
+
             p {
                 margin: 0 0 12px;
             }
@@ -102,7 +121,11 @@ body.modal-open {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin: 2rem 1rem;
+            margin: 2rem 0;
+
+            @include breakpoint-down(medium) {
+                margin: 0.8rem 0.1rem;
+            }
 
 
             li {
@@ -116,16 +139,27 @@ body.modal-open {
             }
         }
 
-        #teamModalHours {
-            margin-top: 1rem;
+        .teamModalHours__container {
+            #teamModalHours__title {
+                font-family: 'Cormorant Garamond';
+                font-size: clamp(16px, 2.6vw, 18px);
+            }
 
-            p {
-                font-family: 'Sebino', sans-serif;
-                font-weight: 300;
-                font-size: 18px;
-                color: colors.$greendark;
-                opacity: 0.85;
-                margin-bottom: 0.2rem;
+            #teamModalHours {
+                margin-top: 1rem;
+
+                p {
+                    font-family: 'Sebino', sans-serif;
+                    font-weight: 300;
+                    font-size: 14px;
+                    color: colors.$greendark;
+                    opacity: 0.85;
+                    margin-bottom: 0.2rem;
+
+                    @include breakpoint-down(medium) {
+                        font-size: 12px;
+                    }
+                }
             }
         }
     }
@@ -168,6 +202,10 @@ body.modal-open {
         font-size: 26px;
         box-shadow: 0 6px 16px rgba(0, 0, 0, .15);
         transition: transform .15s ease, background .15s ease;
+
+        @include breakpoint-down(medium) {
+            display: none;
+        }
 
         &.prev {
             left: 10px;

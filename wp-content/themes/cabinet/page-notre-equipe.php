@@ -22,31 +22,29 @@ get_header(); ?>
                 <?php echo $intro['subtitle']; ?>
             </div>
         </div>
-        <?php
-        // Build filter buttons from the ACF taxonomy field used for "type"
-        $field_obj = get_field_object('type');            // ACF field (taxonomy)
-        $tax_name  = $field_obj['taxonomy'] ?? '';        // e.g. 'type_equipe' (adapt if different)
+        <!-- <?php
+                $field_obj = get_field_object('type');
+                $tax_name  = $field_obj['taxonomy'] ?? '';
 
-        $terms_all = [];
-        if ($tax_name) {
-            $terms_all = get_terms([
-                'taxonomy'   => $tax_name,
-                'hide_empty' => true,
-            ]);
-        }
-        ?>
+                $terms_all = [];
+                if ($tax_name) {
+                    $terms_all = get_terms([
+                        'taxonomy'   => $tax_name,
+                        'hide_empty' => true,
+                    ]);
+                }
+                ?>
         <div class="team-filters" role="toolbar" aria-label="Filtrer l’équipe">
-            <button class="is-active" type="button" data-filter="*">Tous</button>
+
             <?php foreach ($terms_all as $t): ?>
                 <button type="button"
                     data-filter='[data-taxonomy~="<?php echo esc_attr($t->slug); ?>"]'>
                     <?php echo esc_html($t->name); ?>
                 </button>
             <?php endforeach; ?>
-            <!-- Optional: quick filters by group -->
-            <button type="button" data-filter='[data-taxonomy~="praticien"]'>Praticiens</button>
-            <button type="button" data-filter='[data-taxonomy~="assistante"]'>Assistantes</button>
-        </div>
+            <button class="praticien" type="button" data-filter='[data-taxonomy~="praticien"]'>Praticiens</button>
+            <button class="assistante" type="button" data-filter='[data-taxonomy~="assistante"]'>Assistantes</button>
+        </div> -->
 
         <div class="equipe__container">
             <?php
@@ -235,7 +233,11 @@ get_header(); ?>
                                 <p id="teamModalDesc"></p>
                                 <!-- Empty; populated by JS -->
                                 <ul id="teamModalSpecialisations"></ul>
-                                <div id="teamModalHours">
+
+                                <div class="teamModalHours__container">
+                                    <span id="teamModalHours__title">Horaires standard téléphonique</span>
+                                    <div id="teamModalHours">
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -4,29 +4,23 @@ $intro = get_field('intro');
 get_header(); ?>
 
 <div class="cdcc__cabinet">
-    <section class="cdcc__hero" role="banner" aria-label="<?php the_title_attribute(); ?>">
-        <div class="cdcc__hero__inner">
-            <div class="image">
-                <?php
-                $hero_image = get_field('hero_image');
-                if ($hero_image):
-                    $hero_image_url = $hero_image['url'];
-                    $hero_image_alt = $hero_image['alt'] ? $hero_image['alt'] : get_bloginfo('name');
-                ?>
-                    <img src="<?php echo esc_url($hero_image_url); ?>" alt="<?php echo esc_attr($hero_image_alt); ?>">
-                <?php endif; ?>
-            </div>
-
-            <span class="divider" aria-hidden="true"></span>
-
-            <div class="content">
-                <h1><?php the_title(); ?></h1>
-                <?php if (!empty($hero['subtitle'])): ?>
-                    <p class="subtitle"><?php echo esc_html($hero['subtitle']); ?></p>
-                <?php endif; ?>
-            </div>
+    <section class="cdcc__hero cdcc__hero--overlay" role="banner" aria-label="<?php the_title_attribute(); ?>">
+        <div class="cdcc__hero__media" aria-hidden="true">
+            <?php
+            $hero_image = get_field('hero_image');
+            if ($hero_image):
+                $hero_image_url = $hero_image['url'];
+                $hero_image_alt = $hero_image['alt'] ? $hero_image['alt'] : get_bloginfo('name');
+            ?>
+                <img src="<?php echo esc_url($hero_image_url); ?>" alt="<?php echo esc_attr($hero_image_alt); ?>">
+            <?php endif; ?>
+            <h1><?php the_title(); ?></h1>
+            <?php if (!empty($hero['subtitle'])): ?>
+                <p class="subtitle"><?php echo esc_html($hero['subtitle']); ?></p>
+            <?php endif; ?>
         </div>
     </section>
+
 
     <section class="cdcc__cabinet__content">
         <div class="intro">
@@ -38,7 +32,7 @@ get_header(); ?>
             </div>
         </div>
         <div class="gallery">
-            
+
             <?php
             $gallery = get_field('gallery');
             if ($gallery):

@@ -1,0 +1,103 @@
+@use '../abstracts/colors';
+@use '../abstracts/breakpoints' as *;
+
+/* Overlay */
+.site-loader {
+    position: fixed;
+    /* ou absolute si vous préférez, mais fixed couvre toute la page */
+    inset: 0;
+    background: #FFFFFF;
+    /* foncé élégant, modifiez selon votre charte */
+    display: grid;
+    place-items: center;
+    z-index: 9999;
+    transition: opacity .5s ease;
+}
+
+.site-loader.is-done {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.site-loader__inner {
+    text-align: center;
+    padding: 24px;
+}
+
+/* Logo SVG */
+.logo-draw {
+    width: min(56vw, 420px);
+    height: auto;
+    /* Couleur du trait */
+    color: colors.$white;
+}
+
+.logo-draw .draw {
+    stroke-opacity: 0;
+    stroke: colors.$greendark;
+    stroke-width: 0.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1; // JS overwrites with exact length
+    stroke-dashoffset: 1; // fully hidden
+    fill-opacity: 0; // <- start invisible
+    transition: fill-opacity .35s ease;
+}
+
+/* only the current phase becomes visible */
+.logo-draw.show-mark #logoMark .draw {
+    stroke-opacity: 1;
+}
+
+.logo-draw.show-text #logoText .draw {
+    stroke-opacity: 1;
+}
+
+.logo-draw.show-sub #logoSubText .draw {
+    stroke-opacity: 1;
+}
+
+
+.logo-draw.mark-filled #logoMark .draw {
+    fill-opacity: 1;
+}
+
+.logo-draw.text-filled #logoText .draw {
+    fill-opacity: 1;
+}
+
+.logo-draw.subtext-filled #logoSubText .draw {
+
+    fill-opacity: 1;
+}
+
+
+/* Animation de tracé (le JS règle la durée + delay) */
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Sous-texte */
+.loader-subtitle {
+    font-family: "Cormorant Garamond", ui-serif, serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.2vw, 28px);
+    color: rgba(255, 255, 255, .96);
+    margin: 18px 0 0;
+    opacity: 0;
+    transition: opacity .5s ease, transform .5s ease;
+}
+
+.site-loader.show-text .loader-subtitle {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Accessibilité : réduit l’animation si demandé par l’utilisateur */
+@media (prefers-reduced-motion: reduce) {
+    .logo-draw .draw {
+        animation: none !important;
+    }
+}

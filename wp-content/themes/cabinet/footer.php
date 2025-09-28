@@ -58,6 +58,16 @@
     </div>
 </footer>
 <?php wp_footer(); ?>
+
+<!-- Loader overlay -->
+<div id="site-loader" class="site-loader" aria-hidden="true">
+    <div class="site-loader__inner">
+
+        <?php
+        echo file_get_contents(get_template_directory() . '/assets/images/svg/logo_original.svg');
+        ?>
+    </div>
+</div>
 </body>
 
 </html>

@@ -1,9 +1,54 @@
-:root { --page-bg: #ffffff; }
-html, body { background: var(--page-bg); }
-.cdcc__home__soins { background: var(--page-bg); }
-
-.cdcc__home__intro__inner{
-  color: var(--intro-fg, #3D4C51);
+:root {
+    --page-bg: #ffffff;
 }
+
+html,
+body {
+    background: var(--page-bg);
+}
+
+.cdcc__home__soins {
+    background: var(--page-bg);
+}
+
+.cdcc__home__intro__inner {
+    color: var(--intro-fg, #3D4C51);
+}
+
 .cdcc__home__intro__inner a,
-.cdcc__home__intro__inner h2{ color: inherit; }
+.cdcc__home__intro__inner h2 {
+    color: inherit;
+}
+
+/* Only hide the page when the loader is actually running */
+html.app-loading,
+html.app-loading body {
+    height: 100%;
+    overflow: hidden;
+}
+
+html.app-loading body>*:not(#site-loader) {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* If we're not loading, don't even show the loader node (prevents flash) */
+html:not(.app-loading) #site-loader {
+    display: none !important;
+}
+
+/* Reveal when ready */
+html.app-ready body>*:not(#site-loader) {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity .35s ease;
+}
+
+/* Optional fade-out for the loader itself */
+#site-loader.is-done {
+    opacity: 0;
+    transition: opacity .5s ease;
+    pointer-events: none;
+}

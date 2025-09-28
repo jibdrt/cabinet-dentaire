@@ -258,11 +258,11 @@ get_header(); ?>
                         <?php echo isset($urgences['text']) ? $urgences['text'] : ''; ?>
                     </div>
 
-                    <!-- <a href="/urgences" class="btn btn--urgences">
+                    <a href="/contact" class="btn btn--urgences">
                         <span class="btn__dot"></span>
-                        <span class="btn__text">Urgences dentaires</span>
+                        <span class="btn__text">Nous contacter</span>
                         <span class="btn__icon iconify" data-icon="tabler:arrow-right"></span>
-                    </a> -->
+                    </a>
                 </div>
             </div>
         </div>

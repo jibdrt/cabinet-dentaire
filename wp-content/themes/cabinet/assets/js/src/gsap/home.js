@@ -84,80 +84,75 @@ document.addEventListener('DOMContentLoaded', function () {
         // ---------- Page sections
 
         // HERO intro: cascade on page load (no scroll trigger), images untouched
-(() => {
-  const section = q('.cdcc__home__hero');
-  if (!section) return;
+        (() => {
+            const q = (sel, root = document) => root.querySelector(sel);
+            const qa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-  const content  = q('.cdcc__home__hero__inner .content .inner__content', section) || q('.inner__content', section);
-  if (!content) return;
+            const startHero = () => {
+                const section = q('.cdcc__home__hero');
+                if (!section) { document.documentElement.classList.remove('hero-armed'); return; }
 
-  const titleWrap = q('.inner__content__title', content);
-  const h1        = titleWrap?.querySelector('h1');
-  const subline   = titleWrap?.querySelector('span');
-  const hr        = q('.inner__content__separator', content);
-  const subtitle  = q('.inner__content__subtitle', content);
-  const buttons   = qa('.btn.btn--hero', content);
-  const dots      = qa('.btn__dot', content);
-  const icons     = qa('.btn__icon', content);
-  const svg       = section.querySelector('svg');
+                const content = q('.cdcc__home__hero__inner .content .inner__content', section) || q('.inner__content', section);
+                if (!content) { document.documentElement.classList.remove('hero-armed'); return; }
 
-  const isSmall = window.matchMedia('(max-width: 999px)').matches;
+                const titleWrap = q('.inner__content__title', content);
+                const h1 = titleWrap?.querySelector('h1');
+                const subline = titleWrap?.querySelector('span');
+                const hr = q('.inner__content__separator', content);
+                const subtitle = q('.inner__content__subtitle', content);
+                const buttons = qa('.btn.btn--hero', content);
+                const dots = qa('.btn__dot', content);
+                const icons = qa('.btn__icon', content);
+                const svg = section.querySelector('svg');
 
-  // Reduced motion: show immediately
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    gsap.set([h1, subline, hr, subtitle, buttons, dots, icons, svg], { clearProps: 'all' });
-    return;
-  }
+                const isSmall = window.matchMedia('(max-width: 999px)').matches;
+                const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Initial states
-  if (h1)       gsap.set(h1,       { autoAlpha: 0, y: 28 });
-  if (subline)  gsap.set(subline,  { autoAlpha: 0, y: 24 });
-  if (hr)       gsap.set(hr,       { autoAlpha: 0, scaleX: 0, transformOrigin: 'left center' });
-  if (subtitle) gsap.set(subtitle, { autoAlpha: 0, y: 22 });
+                if (reduced) {
+                    gsap.set([h1, subline, hr, subtitle, buttons, dots, icons, svg], { clearProps: 'all' });
+                    document.documentElement.classList.remove('hero-armed');
+                    return;
+                }
 
-  if (buttons.length) {
-    gsap.set(buttons, { autoAlpha: 0, y: 18 });
-    if (dots.length)  gsap.set(dots,  { scale: 0, transformOrigin: '50% 50%' });
-    if (icons.length) gsap.set(icons, { x: -8 });
-  }
+                // 1) Ensure inline hidden states BEFORE removing hero-armed (avoids flash)
+                if (h1) gsap.set(h1, { autoAlpha: 0, y: 28 });
+                if (subline) gsap.set(subline, { autoAlpha: 0, y: 24 });
+                if (hr) gsap.set(hr, { autoAlpha: 0, scaleX: 0, transformOrigin: 'left center' });
+                if (subtitle) gsap.set(subtitle, { autoAlpha: 0, y: 22 });
+                if (buttons.length) {
+                    gsap.set(buttons, { autoAlpha: 0, y: 18 });
+                    if (dots.length) gsap.set(dots, { scale: 0, transformOrigin: '50% 50%' });
+                    if (icons.length) gsap.set(icons, { x: -8 });
+                }
+                if (svg) {
+                    if (isSmall) gsap.set(svg, { autoAlpha: 0 });
+                    else gsap.set(svg, { clearProps: 'opacity,visibility' });
+                }
 
-  // Hide SVG only on small screens so we can reveal it later
-  if (svg) {
-    if (isSmall) {
-      gsap.set(svg, { autoAlpha: 0 });
-    } else {
-      gsap.set(svg, { clearProps: 'opacity,visibility' }); // no delay ≥1000px
-    }
-  }
+                // 2) It’s safe to lift the global CSS hide now
+                document.documentElement.classList.remove('hero-armed');
 
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.05 });
+                // 3) Animate
+                const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.05 });
 
-  if (h1)       tl.to(h1,       { autoAlpha: 1, y: 0, duration: 0.8 });
-  if (subline)  tl.to(subline,  { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.45');
-  if (hr)       tl.to(hr,       { autoAlpha: 1, scaleX: 1, duration: 0.45, ease: 'power2.out' }, '-=0.25');
-  if (subtitle) tl.to(subtitle, { autoAlpha: 1, y: 0, duration: 0.6 }, '-=0.05');
+                if (h1) tl.to(h1, { autoAlpha: 1, y: 0, duration: 0.6 });
+                if (subline) tl.to(subline, { autoAlpha: 1, y: 0, duration: 0.5 }, '-=0.35');
+                if (hr) tl.to(hr, { autoAlpha: 1, scaleX: 1, duration: 0.35, ease: 'power2.out' }, '-=0.2');
+                if (subtitle) tl.to(subtitle, { autoAlpha: 1, y: 0, duration: 0.5 }, '-=0.05');
 
-  if (buttons.length) {
-    tl.to(buttons, { autoAlpha: 1, y: 0, duration: 0.55, ease: 'power2.out', stagger: 0.12 }, '-=0.05')
-      .to(dots,    { scale: 1, duration: 0.35, ease: 'back.out(2)', stagger: 0.12 }, '<')
-      .to(icons,   { x: 0, duration: 0.35, ease: 'power2.out', stagger: 0.12 }, '<+0.05')
-      .add(() => { gsap.set(icons, { clearProps: 'opacity,visibility' }); });
-  }
+                if (buttons.length) {
+                    tl.to(buttons, { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.10 }, '-=0.05')
+                        .to(dots, { scale: 1, duration: 0.3, ease: 'back.out(2)', stagger: 0.10 }, '<')
+                        .to(icons, { x: 0, duration: 0.3, ease: 'power2.out', stagger: 0.10 }, '<+0.04')
+                        .add(() => { gsap.set(icons, { clearProps: 'opacity,visibility' }); });
+                }
 
-  // 👉 Reveal SVG only under 1000px (after buttons)
-  if (svg && isSmall) {
-    tl.to(svg, { autoAlpha: 1, duration: 0.45, ease: 'power2.out' }, '>');
-    // or with a tiny lift:
-    // tl.fromTo(svg, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out' }, '>');
-  }
+                if (svg && isSmall) tl.to(svg, { autoAlpha: 1, duration: 0.35, ease: 'power2.out' }, '>');
+            };
 
-  document.addEventListener('iconify-icon-updated', () => {
-    gsap.set(icons, { clearProps: 'opacity,visibility' });
-  }, { once: true });
-})();
-
-
-
+            // Start hero only after loader is gone (or immediately if loader was skipped)
+            window.addEventListener('site-loader:done', startHero, { once: true });
+        })();
 
         // INTRO
         (() => {
@@ -253,31 +248,51 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-        // TEAM — center-center trigger feel
+        // TEAM — center-center trigger feel (image fades, text slides)
         (() => {
             const section = q('.cdcc__home__team');
             if (!section) return;
+
             const title = q('.cdcc__home__team__title .title', section);
             const subtitle = q('.cdcc__home__team__title .subtitle', section);
             const btn = q('.cdcc__home__team__title .btn--team', section);
             const imageBox = q('.cdcc__home__team__content .image', section);
 
-            const els = [title, subtitle, btn, imageBox].filter(Boolean);
-            gsap.set(els, { autoAlpha: 0, y: 24 });
+            const texts = [title, subtitle, btn].filter(Boolean);
 
-            gsap.to(els, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 1.0,
-                ease: 'power3.out',
-                stagger: 0.15,
+            // Text: start hidden + slide up
+            gsap.set(texts, { autoAlpha: 0, y: 24 });
+
+            // Image: start hidden, no vertical offset
+            if (imageBox) gsap.set(imageBox, { autoAlpha: 0, y: 0 });
+
+            const tl = gsap.timeline({
+                defaults: { ease: 'power3.out' },
                 scrollTrigger: {
                     trigger: section,
                     start: 'top 85%',
                     toggleActions: 'play none none none'
                 }
             });
+
+            // Text slides in
+            tl.to(texts, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.15
+            });
+
+            // Image fades in (no movement); overlaps slightly with last text
+            if (imageBox) {
+                tl.to(imageBox, {
+                    autoAlpha: 1,
+                    duration: 0.8,
+                    ease: 'power2.out'
+                }, '-=0.65'); // adjust overlap as you like
+            }
         })();
+
 
         // URGENCES
         (() => {

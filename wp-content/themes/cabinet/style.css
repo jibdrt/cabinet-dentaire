@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 Theme Name: Cabinet
 Theme URI:
@@ -336,8 +337,16 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 @media screen and (max-width: calc(1000px - 0.02px)) {
   .cdcc__header___close {
+    right: 2.2rem;
+    top: 3.2rem;
+    z-index: 9;
+  }
+}
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__header___close {
     right: 1.2rem;
-    top: 22%;
+    top: 1.5rem;
+    z-index: 9;
   }
 }
 .cdcc__header___close .iconify {
@@ -450,7 +459,8 @@ p, h1, h2, h3, h4, h5, h6 {
     width: 100%;
   }
 }
-.cdcc__footer .inner .right .footer__menu, .cdcc__footer .inner .right .footer__resources {
+.cdcc__footer .inner .right .footer__menu,
+.cdcc__footer .inner .right .footer__resources {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -458,18 +468,21 @@ p, h1, h2, h3, h4, h5, h6 {
   text-align: right;
 }
 @media screen and (max-width: calc(1000px - 0.02px)) {
-  .cdcc__footer .inner .right .footer__menu, .cdcc__footer .inner .right .footer__resources {
+  .cdcc__footer .inner .right .footer__menu,
+  .cdcc__footer .inner .right .footer__resources {
     text-align: left;
   }
 }
-.cdcc__footer .inner .right .footer__menu a, .cdcc__footer .inner .right .footer__resources a {
+.cdcc__footer .inner .right .footer__menu a,
+.cdcc__footer .inner .right .footer__resources a {
   font-family: "sebino", sans-serif;
   font-weight: 300;
   font-size: 1.1rem;
   text-decoration: none;
   color: #FFFFFF;
 }
-.cdcc__footer .inner .right .footer__menu a:hover, .cdcc__footer .inner .right .footer__resources a:hover {
+.cdcc__footer .inner .right .footer__menu a:hover,
+.cdcc__footer .inner .right .footer__resources a:hover {
   color: #CBAE70;
 }
 
@@ -529,6 +542,16 @@ body.modal-open {
   background: #f1f5f9;
   overflow: hidden;
 }
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__modal .cdcc__modal__media {
+    height: 20rem;
+  }
+}
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__modal .cdcc__modal__media {
+    height: 15rem;
+  }
+}
 .cdcc__modal .cdcc__modal__media img {
   width: 100%;
   height: 100%;
@@ -536,9 +559,14 @@ body.modal-open {
   object-position: top;
   display: block;
 }
+.cdcc__modal .cdcc__modal__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
 .cdcc__modal .cdcc__modal__content h3 {
   margin: 0 0 8px;
-  font-size: clamp(22px, 2.6vw, 32px);
+  font-size: clamp(18px, 2.6vw, 32px);
   line-height: 1.1;
   color: #3D4C51;
   text-transform: uppercase;
@@ -546,6 +574,7 @@ body.modal-open {
   font-weight: 500;
 }
 .cdcc__modal .cdcc__modal__content .cdcc__modal__meta {
+  display: none;
   margin: 0 0 14px;
   color: #3D4C51;
 }
@@ -558,6 +587,11 @@ body.modal-open {
   font-family: "Sebino", sans-serif;
   font-weight: 300;
 }
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__modal .cdcc__modal__content #teamModalDesc {
+    font-size: 14px;
+  }
+}
 .cdcc__modal .cdcc__modal__content #teamModalDesc p {
   margin: 0 0 12px;
 }
@@ -568,7 +602,12 @@ body.modal-open {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 2rem 1rem;
+  margin: 2rem 0;
+}
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__modal .cdcc__modal__content #teamModalSpecialisations {
+    margin: 0.8rem 0.1rem;
+  }
 }
 .cdcc__modal .cdcc__modal__content #teamModalSpecialisations li {
   background: #3D4C51;
@@ -579,16 +618,25 @@ body.modal-open {
   padding: 4px 12px;
   border-radius: 999px;
 }
-.cdcc__modal .cdcc__modal__content #teamModalHours {
+.cdcc__modal .cdcc__modal__content .teamModalHours__container #teamModalHours__title {
+  font-family: "Cormorant Garamond";
+  font-size: clamp(16px, 2.6vw, 18px);
+}
+.cdcc__modal .cdcc__modal__content .teamModalHours__container #teamModalHours {
   margin-top: 1rem;
 }
-.cdcc__modal .cdcc__modal__content #teamModalHours p {
+.cdcc__modal .cdcc__modal__content .teamModalHours__container #teamModalHours p {
   font-family: "Sebino", sans-serif;
   font-weight: 300;
-  font-size: 18px;
+  font-size: 14px;
   color: #3D4C51;
   opacity: 0.85;
   margin-bottom: 0.2rem;
+}
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__modal .cdcc__modal__content .teamModalHours__container #teamModalHours p {
+    font-size: 12px;
+  }
 }
 .cdcc__modal .cdcc__modal__close {
   position: absolute;
@@ -627,6 +675,11 @@ body.modal-open {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   transition: transform 0.15s ease, background 0.15s ease;
 }
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__modal .cdcc__modal__nav {
+    display: none;
+  }
+}
 .cdcc__modal .cdcc__modal__nav.prev {
   left: 10px;
 }
@@ -652,6 +705,133 @@ body.modal-open {
   border-radius: 0 !important;
 }
 
+/* Overlay */
+.site-loader {
+  position: fixed;
+  /* ou absolute si vous préférez, mais fixed couvre toute la page */
+  inset: 0;
+  background: #FFFFFF;
+  /* foncé élégant, modifiez selon votre charte */
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.site-loader.is-done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-loader__inner {
+  text-align: center;
+  padding: 24px;
+}
+
+/* Logo SVG */
+.logo-draw {
+  width: min(56vw, 420px);
+  height: auto;
+  /* Couleur du trait */
+  color: #FFFFFF;
+}
+
+.logo-draw .draw {
+  stroke-opacity: 0;
+  stroke: #3D4C51;
+  stroke-width: 0.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  fill-opacity: 0;
+  transition: fill-opacity 0.35s ease;
+}
+
+/* only the current phase becomes visible */
+.logo-draw.show-mark #logoMark .draw {
+  stroke-opacity: 1;
+}
+
+.logo-draw.show-text #logoText .draw {
+  stroke-opacity: 1;
+}
+
+.logo-draw.show-sub #logoSubText .draw {
+  stroke-opacity: 1;
+}
+
+.logo-draw.mark-filled #logoMark .draw {
+  fill-opacity: 1;
+}
+
+.logo-draw.text-filled #logoText .draw {
+  fill-opacity: 1;
+}
+
+.logo-draw.subtext-filled #logoSubText .draw {
+  fill-opacity: 1;
+}
+
+/* Animation de tracé (le JS règle la durée + delay) */
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+/* Sous-texte */
+.loader-subtitle {
+  font-family: "Cormorant Garamond", ui-serif, serif;
+  font-style: italic;
+  font-size: clamp(18px, 2.2vw, 28px);
+  color: rgba(255, 255, 255, 0.96);
+  margin: 18px 0 0;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.site-loader.show-text .loader-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accessibilité : réduit l’animation si demandé par l’utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  .logo-draw .draw {
+    animation: none !important;
+  }
+}
+/* Vertical slice reveal overlay */
+.slice-reveal {
+  position: absolute;
+  inset: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+  /* above img, below text (your h1 has z-index:2) */
+}
+.slice-reveal .slice {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* set via JS per-slice */
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* adjusted in JS for proper fit */
+  background-position: center;
+  will-change: transform, opacity;
+  filter: brightness(0.35);
+}
+
+/* reduce motion: skip fancy effect */
+@media (prefers-reduced-motion: reduce) {
+  .slice-reveal {
+    display: none !important;
+  }
+}
 .cdcc__default .cdcc__hero--default {
   background: #3D4C51;
   color: #FFFFFF;
@@ -920,6 +1100,19 @@ body.modal-open {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.hero-armed .cdcc__home__hero .inner__content__title h1,
+.hero-armed .cdcc__home__hero .inner__content__title span,
+.hero-armed .cdcc__home__hero .inner__content__separator,
+.hero-armed .cdcc__home__hero .inner__content__subtitle,
+.hero-armed .cdcc__home__hero .inner__content .btn.btn--hero,
+.hero-armed .cdcc__home__hero .inner__content .btn.btn--hero .btn__dot,
+.hero-armed .cdcc__home__hero .inner__content .btn.btn--hero .btn__icon,
+.hero-armed .cdcc__home__hero svg {
+  opacity: 0;
+  visibility: hidden;
+  /* avoids focus/selection before reveal */
 }
 
 .cdcc__home__hero {
@@ -1748,6 +1941,47 @@ body.modal-open {
 .cdcc__home__urgences .inner .col__content .content .text p {
   margin: 0 0 1.2rem 0;
 }
+.cdcc__home__urgences .inner .col__content .content .btn--urgences {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 18px 14px 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences:hover {
+  background: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences:hover .btn__text,
+.cdcc__home__urgences .inner .col__content .content .btn--urgences:hover .btn__icon {
+  color: #3D4C51;
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences .btn__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #CBAE70;
+  flex-shrink: 0;
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences .btn__text {
+  font-family: "Sebino", sans-serif;
+  font-weight: 400;
+  font-size: clamp(16px, 2vw, 18px);
+  line-height: 1;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+}
+.cdcc__home__urgences .inner .col__content .content .btn--urgences .btn__icon {
+  margin-left: 6px;
+  font-size: 1.1rem;
+  line-height: 1;
+  opacity: 0.95;
+  color: #FFFFFF;
+}
 
 .cdcc__home__acces {
   width: 100%;
@@ -1903,107 +2137,70 @@ body.modal-open {
   will-change: background-color, stroke, stroke-dashoffset, opacity, transform;
 }
 
-.cdcc__cabinet .cdcc__hero {
+.cdcc__cabinet .cdcc__hero--overlay {
+  position: relative;
   background: #3D4C51;
   color: #FFFFFF;
-}
-.cdcc__cabinet .cdcc__hero .cdcc__hero__inner {
-  width: min(92vw, 1440px);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto 1.3fr;
-  align-items: center;
-  column-gap: clamp(24px, 4vw, 64px);
   min-height: clamp(420px, 60vh, 720px);
+  overflow: clip;
 }
 @media screen and (max-width: calc(1000px - 0.02px)) {
-  .cdcc__cabinet .cdcc__hero .cdcc__hero__inner {
-    grid-template-columns: 1fr;
-    row-gap: clamp(20px, 4vw, 36px);
-    min-height: unset;
-    padding: 2rem 0;
+  .cdcc__cabinet .cdcc__hero--overlay {
+    min-height: clamp(320px, 20vh, 720px);
   }
 }
-.cdcc__cabinet .cdcc__hero .image {
-  align-self: center;
+.cdcc__cabinet .cdcc__hero--overlay.is-ready .cdcc__hero__media img {
+  transform: scale(1.02);
 }
-.cdcc__cabinet .cdcc__hero .image img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4/3;
-  object-fit: cover;
-  border-radius: 22px;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
-}
-@media screen and (max-width: calc(1000px - 0.02px)) {
-  .cdcc__cabinet .cdcc__hero .image img {
-    aspect-ratio: 16/10;
-    border-radius: 8px;
-  }
-}
-.cdcc__cabinet .cdcc__hero .divider {
-  width: 1px;
-  height: clamp(80px, 18vh, 160px);
-  background: #CBAE70;
-  opacity: 0.9;
-  border-radius: 1px;
-  transform: translateY(4px);
-}
-@media screen and (max-width: calc(1000px - 0.02px)) {
-  .cdcc__cabinet .cdcc__hero .divider {
-    display: none;
-  }
-}
-.cdcc__cabinet .cdcc__hero .content {
+.cdcc__cabinet .cdcc__hero--overlay .cdcc__hero__media {
   display: flex;
-  flex-direction: column;
+  align-items: end;
   justify-content: center;
+  position: absolute;
+  inset: 0;
 }
-@media screen and (max-width: calc(1000px - 0.02px)) {
-  .cdcc__cabinet .cdcc__hero .content {
-    width: 90%;
-    margin: auto;
-  }
-}
-.cdcc__cabinet .cdcc__hero .content h1 {
+.cdcc__cabinet .cdcc__hero--overlay .cdcc__hero__media h1 {
+  position: absolute;
+  bottom: 15%;
+  width: 80%;
   font-family: "Cormorant Garamond", serif;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   line-height: 1.05;
-  font-size: clamp(34px, 5vw, 96px);
+  font-size: clamp(34px, 12vw, 126px);
   color: #FFFFFF;
+  margin: 0 0 clamp(8px, 1.8vw, 16px);
+  z-index: 2;
 }
-@media screen and (max-width: calc(850px - 0.02px)) {
-  .cdcc__cabinet .cdcc__hero .content h1 {
-    letter-spacing: 0.06em;
-  }
-}
-.cdcc__cabinet .cdcc__hero .content .subtitle {
+.cdcc__cabinet .cdcc__hero--overlay .cdcc__hero__media .subtitle {
   font-family: "Cormorant Garamond", serif;
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0.06em;
-  margin: 0;
-  opacity: 0.9;
   font-size: clamp(18px, 2.2vw, 36px);
   color: rgba(255, 255, 255, 0.95);
+  margin: 0;
 }
-@media screen and (max-width: calc(1000px - 0.02px)) {
-  .cdcc__cabinet .cdcc__hero .content {
-    text-align: left;
-  }
+.cdcc__cabinet .cdcc__hero--overlay .cdcc__hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35));
+  pointer-events: none;
 }
-@media screen and (min-width: 1650px) {
-  .cdcc__cabinet .cdcc__hero .cdcc__hero__inner {
-    width: min(88vw, 1600px);
-    column-gap: clamp(32px, 3.5vw, 72px);
-  }
+.cdcc__cabinet .cdcc__hero--overlay .cdcc__hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.55);
+  transition: transform 1.2s ease;
 }
 @media (prefers-reduced-motion: reduce) {
-  .cdcc__cabinet .cdcc__hero .image img {
+  .cdcc__cabinet .cdcc__hero--overlay .cdcc__hero__media img {
     transition: none;
+    transform: none;
   }
 }
 .cdcc__cabinet .cdcc__cabinet__content {
@@ -2014,15 +2211,20 @@ body.modal-open {
   width: 80%;
   margin: 4rem auto 0 auto;
 }
+@media screen and (max-width: calc(768px - 0.02px)) {
+  .cdcc__cabinet .cdcc__cabinet__content .intro {
+    margin: 2rem auto 0 auto;
+  }
+}
 .cdcc__cabinet .cdcc__cabinet__content .intro .title {
   font-family: "Cormorant Garamond", serif;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   line-height: 1.05;
-  margin: 2rem 0 3rem 0;
-  font-size: clamp(28px, 4vw, 48px);
+  margin: 2rem 0 1rem 0;
   color: #3D4C51;
+  font-size: clamp(24px, 4vw, 48px);
 }
 .cdcc__cabinet .cdcc__cabinet__content .intro .subtitle {
   font-family: "Sebino", sans-serif;
@@ -2275,7 +2477,6 @@ body.modal-open {
 @media screen and (max-width: calc(1000px - 0.02px)) {
   .cdcc__contact .cdcc__hero .content {
     width: 90%;
-    border: 1px solid red;
     margin: auto;
   }
 }
@@ -2293,16 +2494,6 @@ body.modal-open {
     letter-spacing: 0.06em;
   }
 }
-.cdcc__contact .cdcc__hero .content .subtitle {
-  font-family: "Cormorant Garamond", serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  margin: 0;
-  opacity: 0.9;
-  font-size: clamp(18px, 2.2vw, 36px);
-  color: rgba(255, 255, 255, 0.95);
-}
 @media screen and (max-width: calc(1000px - 0.02px)) {
   .cdcc__contact .cdcc__hero .content {
     text-align: left;
@@ -2313,34 +2504,28 @@ body.modal-open {
   width: 100%;
 }
 .cdcc__contact .cdcc__contact__content .intro {
-  width: 80%;
+  width: 65%;
   margin: 4rem auto 0 auto;
 }
-.cdcc__contact .cdcc__contact__content .intro .title {
-  font-family: "Cormorant Garamond", serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  line-height: 1.05;
-  margin: 2rem 0 3rem 0;
-  font-size: clamp(28px, 4vw, 48px);
-  color: #3D4C51;
+@media screen and (max-width: calc(1000px - 0.02px)) {
+  .cdcc__contact .cdcc__contact__content .intro {
+    width: 90%;
+  }
 }
 .cdcc__contact .cdcc__contact__content .intro .subtitle {
-  font-family: "Sebino", sans-serif;
-  font-weight: 300;
-  margin: 0 0 2rem 0;
-  font-size: clamp(18px, 2vw, 28px);
-  line-height: 1.3;
-  letter-spacing: 0.04em;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  margin: 0;
+  opacity: 0.9;
+  font-size: clamp(18px, 2.2vw, 36px);
   color: #3D4C51;
-  opacity: 0.85;
 }
 .cdcc__contact .cdcc__contact__content .form__container {
   font-family: "Sebino", sans-serif;
   width: 65%;
   margin: auto;
-  padding: 4rem 0;
 }
 @media screen and (max-width: calc(1000px - 0.02px)) {
   .cdcc__contact .cdcc__contact__content .form__container {
@@ -2358,6 +2543,10 @@ body.modal-open {
   background: none;
   min-height: unset;
 }
+.cdcc__contact .cdcc__contact__content .form__container label,
+.cdcc__contact .cdcc__contact__content .form__container select {
+  color: rgba(0, 0, 0, 0.47);
+}
 .cdcc__contact .cdcc__contact__content .form__container textarea {
   border: none;
   background: rgb(228, 228, 228);
@@ -2366,10 +2555,10 @@ body.modal-open {
   color: #3D4C51 !important;
 }
 .cdcc__contact .cdcc__contact__content .form__container .wpforms-error {
-  color: #3D4C51 !important;
+  color: red !important;
 }
 .cdcc__contact .cdcc__contact__content .form__container .wpforms-error::before {
-  background-color: #FFFFFF;
+  background-color: red;
 }
 .cdcc__contact .cdcc__contact__content .form__container .wpforms-submit {
   position: relative;
@@ -2539,10 +2728,19 @@ body.modal-open {
   opacity: 0.85;
 }
 .cdcc__equipe .cdcc__equipe__content .team-filters {
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
-  margin: 1.25rem 0;
+  margin: 1.25rem auto;
+}
+.cdcc__equipe .cdcc__equipe__content .team-filters button.praticien {
+  background: #3D4C51;
+  color: #FFFFFF;
+}
+.cdcc__equipe .cdcc__equipe__content .team-filters button.assistante {
+  background: #CBAE70;
+  color: #FFFFFF;
 }
 .cdcc__equipe .cdcc__equipe__content .team-filters button {
   border: 0;
@@ -2755,7 +2953,8 @@ body.modal-open {
   --page-bg: #ffffff;
 }
 
-html, body {
+html,
+body {
   background: var(--page-bg);
 }
 
@@ -2770,4 +2969,37 @@ html, body {
 .cdcc__home__intro__inner a,
 .cdcc__home__intro__inner h2 {
   color: inherit;
+}
+
+/* Only hide the page when the loader is actually running */
+html.app-loading,
+html.app-loading body {
+  height: 100%;
+  overflow: hidden;
+}
+
+html.app-loading body > *:not(#site-loader) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* If we're not loading, don't even show the loader node (prevents flash) */
+html:not(.app-loading) #site-loader {
+  display: none !important;
+}
+
+/* Reveal when ready */
+html.app-ready body > *:not(#site-loader) {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.35s ease;
+}
+
+/* Optional fade-out for the loader itself */
+#site-loader.is-done {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
 }

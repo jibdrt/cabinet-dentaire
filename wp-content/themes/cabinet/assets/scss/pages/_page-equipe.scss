@@ -158,10 +158,24 @@
         }
 
         .team-filters {
+            width: 80%;
             display: flex;
             flex-wrap: wrap;
             gap: .5rem 1rem;
-            margin: 1.25rem 0;
+            margin: 1.25rem auto;
+
+            button {
+
+                &.praticien {
+                    background: colors.$greendark;
+                    color: colors.$white;
+                }
+
+                &.assistante {
+                    background: colors.$gold;
+                    color: colors.$white;
+                }
+            }
         }
 
         .team-filters button {
